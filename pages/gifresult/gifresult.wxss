@@ -1,0 +1,102 @@
+page{
+  background-color: #FFF;
+}
+.result-view{
+  margin: 20rpx;
+  display: flex;
+  justify-content: center;
+}
+.result-image{
+  width: 96%;
+  min-height: 200rpx;
+}
+.save_button{
+  width: 90%;
+  border-radius: 3px;  
+  font-size:18px;
+  background-color:#ff8719;  
+  color:white;
+  overflow:hidden;
+  height:90rpx;
+  line-height: 90rpx;
+  margin-top: 30rpx;
+  margin-bottom: 30rpx;
+}
+.share_button{
+  width: 90%;
+  border-radius: 3px;  
+  margin:20rpx auto;
+  font-size:18px;  
+  background-color:#30bdf7;  
+  color:white;
+  overflow:hidden;
+  height:90rpx;
+  line-height: 90rpx;
+}
+.more_item{
+  width: 90%;
+  border-radius: 3px;  
+  margin:20rpx auto;
+  font-size:18px;
+  background-color:#f73a22;  
+  color:white;
+  overflow:hidden;
+  height:90rpx;
+  line-height: 90rpx;
+}
+.save-hover {
+  background-color: #fca001;
+}
+.share-hover {
+  background-color: #9ce2ff;
+}
+.top_class{
+  background: #cdcdcd;
+  opacity: 0.4
+}
+.show_tip {  
+  width: 100%;  
+  height: 100%;  
+  position: fixed;  
+  top: 0;  
+  left: 0;  
+  z-index: 1000;  
+  background: #000;  
+  opacity: 0.6;  
+  overflow: hidden;
+  justify-content: flex-start;
+  display: flex;
+  flex-direction: column;
+}
+.show-content{
+  display: flex;
+  justify-content: center;
+}
+.show-content-end{
+  display: flex;
+  justify-content: flex-end;
+}
+.touch-image{
+  width: 100rpx;
+  height: 100rpx;
+  margin-top: 160rpx;
+}
+
+.show_tip text{
+  color: white;
+  font-size: 20px;
+  margin-top: 60rpx;
+}
+.ikonw{
+  width: 40%;
+  border-radius: 5px;  
+  margin:20rpx auto;
+  font-size:16px;
+  background-color:#FF4040;
+  color:white;
+  overflow:hidden;
+  height:80rpx;
+  line-height: 80rpx;
+  margin-top: 20%;
+  opacity: 1
+}

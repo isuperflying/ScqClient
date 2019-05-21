@@ -1,0 +1,14 @@
+
+<view class='result-view'>
+    <image mode='widthFix' src='{{result_img}}' class='result-image' bindtap='preimage'></image>
+</view>
+<view>
+  <button class='save_button' bindtap='saveImage' hover-class='save-hover'>保存</button>
+  <button class='share_button' bindtap='shareImage' hover-class='share-hover' open-type='share'>分享</button>
+  <button class='more_item' bindtap='moreItem' hover-class='save-hover'>更多装逼素材</button>
+</view>
+<view class="show_tip" data-statu="close" wx:if="{{showModalStatus}}" bindtap='powerShow'>
+    <view class='show-content'><image src='../image/touch_save_icon.png' class='touch-image'></image></view>
+    <view class='show-content'><text>点击预览图片，长按发送给好友</text></view>
+    <view class='show-content-end'><button class='ikonw' bindtap='powerShow'>知道了</button></view>
+</view>

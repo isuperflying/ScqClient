@@ -1,0 +1,10 @@
+@import "../style/common.wxss";
+
+.cropper{
+    
+}
+
+.cropper-buttons{
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #04b00f;
+}

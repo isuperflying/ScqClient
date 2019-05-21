@@ -1,0 +1,45 @@
+<view class='create-view'>
+    <image mode='widthFix' style='width:{{swidth}}rpx;height:{{sheight}}rpx' src='{{cimg}}' class='create-image' bindtap='preimage' bindload='loadDone'></image>
+</view>
+
+<view>
+  <block wx:for="{{params}}" wx:key="id" wx:for-item="item" wx:for-index="index">
+      <block wx:if="{{item.is_hide == 0}}">
+          <!--输入框-->
+          <view wx:if="{{item.input_type == 0}}" class='create_content'>
+              <input placeholder="{{item.def_val}}" class='text_input' bindinput='bindKeyInput' type='{{item.itype}}' data-i="{{index}}" maxlength='{{item.text_len_limit}}'></input>
+          </view>
+          <!--下拉框-->
+          <view wx:if="{{item.input_type == 1}}" class='create_content_select'>
+              <picker bindchange="bindPickerChange" value="{{item['position']}}" range="{{item['select_value']}}" class='select_bg' 
+                data-select="{{item['select_value']}}" data-index="{{index}}">
+                 <view class="create_content_select_item"> 
+                     <label>{{item['select'][item['position']]['opt_text']}}</label>
+                     <image src='../image/down_select_icon.png'></image>
+                  </view>
+              </picker>
+              <view wx-if='{{item["flag_input"]}}' class='create_content_select_input'>
+                <input placeholder="请输入自定义值" bindinput='bindKeyInput' data-i="{{index}}" class='text_input'></input>
+              </view>
+          </view>
+          <!--图片-->
+          <view wx:if="{{item.input_type == 2 || item.input_type == 3 || item.input_type == 4}}" class='create_select_img_item'>
+              <view class='create_add_img'>
+                <label>选择图片:</label>
+                <image src='{{add_img}}' bindtap='selectImage'></image>
+              </view>
+          </view>
+      </block>
+
+  </block>
+
+  <view class='create_button'>
+      <view class="page__bd page__bd_spacing">
+        <button class="weui-btn" type="primary" bindtap='create'>一键生成</button>
+      </view>
+  </view>
+  <view class='bottom-user'>
+    <label class='user-remark'>素材由用户：{{author_name}} 上传</label>
+  </view>
+</view>
+

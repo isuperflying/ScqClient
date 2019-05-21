@@ -1,0 +1,15 @@
+<scroll-view scroll-y class='collection-all'>
+  <view class='top-view'>
+    <image src='{{top_img}}' class='top-img'></image>
+    <view class='banner-remark'>
+      <text class='title'>恶搞必备</text>
+      <text class="des">在线生成有钱为所欲为、王境泽、窃格瓦拉以及土拨鼠等gif动态表情包</text>
+    </view>
+  </view>
+
+  <view class='img-list'>
+    <view class='img-item' style="{{item.fixStyles}}" wx:for="{{array}}" wx:key="id" wx:for-item="item" bindtap='imagedetail' data-index='{{index}}'>
+      <image src='../image/{{item}}' class='item-img' mode='widthFix'></image>
+    </view>
+  </view>
+</scroll-view>

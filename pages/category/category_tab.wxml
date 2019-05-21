@@ -1,0 +1,40 @@
+<view class="swiper-tab">
+    <view class="swiper-tab-list {{currentTab==0 ? 'on' : ''}}" data-current="0" bindtap="swichNav">最新</view>
+    <view class="swiper-tab-list {{currentTab==1 ? 'on' : ''}}" data-current="1" bindtap="swichNav">热门</view>
+</view>
+
+  <view hidden="{{!isShow}}">
+    <view class="container-home">
+      <view class="content">
+          <view class="img-list">
+              <view class="ul">
+                  <view class="li" wx:for="{{array}}" wx:for-item="item" bindtap='create' data-itmedata='{{item}}'>
+                      <view>
+                          <image src="{{item.small_img}}" mode="widthFix"></image>
+                          <text>{{item.title}}</text>
+                          <view class="bg"></view>
+                      </view>
+                  </view>
+              </view>
+          </view>
+      </view>
+    </view>
+  </view>
+  
+  <view hidden="{{isShow}}">
+      <view class="container-home">
+      <view class="content">
+          <view class="img-list">
+              <view class="ul">
+                  <view class="li" wx:for="{{array_hot}}" wx:for-item="item" bindtap='create' data-itmedata='{item}'>
+                      <view>
+                          <image src="{{item.small_img}}" mode="widthFix"></image>
+                          <text>{{item.title}}</text>
+                          <view class="bg"></view>
+                      </view>
+                  </view>
+              </view>
+          </view>
+      </view>
+    </view>
+  </view>

@@ -1,0 +1,38 @@
+
+  <view class="container-home">
+    <view class="content">
+        <view class="img-list">
+            <view class="ul">
+                <view class="li" wx:for="{{array}}" wx:key="{{index}}" wx:for-item="item" bindtap='create' data-itmedata='{{item}}'>
+                    <view>
+                        <image src="{{item.small_img}}" mode="widthFix" class='item-img'></image>
+                        <!-- <image src='../image/is_vip.png' class='is-vip' wx:if="{{item.is_vip == 1}}"></image> -->
+                        <text>{{item.title}}</text>
+                        <view class="bg"></view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class='load_more' wx:if="{{is_load_more}}"><image src='../image/load_more.gif' class='load_more_image'></image></view>
+    </view>
+  </view>
+  
+  <!--弹窗下载APP-->
+<view class="modal-mask" catchtouchmove="preventTouchMove"  bindtap='hideModal' wx:if="{{showModal}}"></view>
+<view class="modal-dialog" wx:if="{{showModal}}">
+    <view class='modal-top'>
+      <view class="modal-title">腾牛生成神器</view>
+      <view class="modal-content">
+          <view class='model-content-item'><image src='../image/logo.png' class='close-image'></image></view>
+          <view class='model-content-item'><text class='app-name'>腾牛生成神器</text></view>
+          <view class='down-tip'>
+            <view class='model-content-item'><text>去应用商店和AppStore搜索</text></view>
+            <view class='model-content-item'><text>"腾牛生成神器"</text></view>
+            <view class='model-content-item'><text>下载APP体验更多有趣的素材</text></view>
+          </view>
+      </view>
+    </view>
+    <view class="modal-footer" bindtap='hideModal'>
+        <image src='../image/close_icon.png' class='close-image'></image>
+    </view>
+</view>

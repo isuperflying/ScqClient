@@ -1,0 +1,21 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/cutInside/cutInside",
+    "pages/createbefore/createbefore",
+    "pages/category/category",
+    "pages/collection/collection",
+    "pages/gifgenerate/gifgenerate",
+    "pages/result/result",
+    "pages/gifresult/gifresult",
+    "pages/logs/logs"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ff5555",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "white",
+    "onReachBottomDistance": 20
+  },
+  "sitemapLocation": "sitemap.json"
+}
