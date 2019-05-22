@@ -5,6 +5,7 @@ var pre_img;
 const app = getApp()
 var width;
 var height;
+var baseUrl = 'http://192.168.1.3:8899/'
 Page({
   data: {
     cimg: '',
@@ -13,7 +14,8 @@ Page({
     flag_input: false,
     add_img: crop_path,
     swidth: 0,
-    sheight: 0
+    sheight: 0,
+    baseUrl:baseUrl
   },
   onLoad: function (options) {
     //进入时设置初始图片
@@ -40,17 +42,22 @@ Page({
     // }
 
     console.log('id--->'+options.id)
-    var Page$this = this;
+    var that = this;
     wx.request({
-      url: 'https://nz.qqtn.com/zbsq/index.php?m=home&c=zbsq&a=getItem',
-      method: 'GET',
+      url: 'http://192.168.1.3:8899/queryscinfobyid',
+      method: 'POST',
       data: {
-        'id': options.id
+        'sid': options.id
       },
       success: function (res) {
+        console.log(res.data.data)
         wx.hideLoading()
-        data_files = res.data.data;
-        Page$this.initData();
+        data_files = res.data.data.fields;
+        //that.initData();
+        that.setData({
+          params: data_files,
+          cimg: res.data.data.sc_pre_img
+        })
       },
       fail: function (res) {
         wx.hideLoading()
@@ -198,10 +205,49 @@ Page({
     console.log(e)
     let i = e.currentTarget.dataset.i
     
-    data_files['field'][i]['sval'] = e.detail.value
-    console.log(data_files['field'][i]['sval'])
+    data_files[i]['sval'] = e.detail.value
+    console.log(data_files[i]['sval'])
     
   },
+
+  create1:function(event){
+    console.log(data_files)
+    // let tempInput = "{\"in_data\":[";
+    // for (var i = 0; i < data_files.length; i++) {
+    //   var sval = data_files[i]["sval"] || "";
+    //   tempInput += "\"" + sval + "\"";
+    //   if (i < data_files.length-1){
+    //     tempInput += ","
+    //   }
+    // }
+    let inputs = []
+    for (var i = 0; i < data_files.length; i++) {
+      var sval = data_files[i]["sval"] || "";
+      inputs.push(sval)
+    }
+    console.log(inputs)
+
+    wx.request({
+      url: 'http://192.168.1.3:8899/createzbimage',
+      method: 'POST',
+      data: {
+        'in_data': inputs,
+        'sid':2
+      },
+      success: function (res) {
+
+        console.log(res.data);
+        wx.navigateTo({
+          url: '../result/result?rimg=' + res.data.data + '&title=' + data_files.title
+        })
+      },
+      fail: function (res) {
+        console.log("fail2--->" + JSON.stringify(res));
+      }
+    })
+
+  },
+
   //一键生成
   create: function (event) {
     var field = data_files['field'];

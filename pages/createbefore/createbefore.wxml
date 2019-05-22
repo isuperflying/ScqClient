@@ -1,13 +1,13 @@
 <view class='create-view'>
-    <image mode='widthFix' style='width:{{swidth}}rpx;height:{{sheight}}rpx' src='{{cimg}}' class='create-image' bindtap='preimage' bindload='loadDone'></image>
+    <image mode='widthFix' src='{{baseUrl + cimg}}' class='create-image' bindtap='preimage' bindload='loadDone'></image>
 </view>
 
 <view>
   <block wx:for="{{params}}" wx:key="id" wx:for-item="item" wx:for-index="index">
-      <block wx:if="{{item.is_hide == 0}}">
+      <block wx:if="{{item.is_visable == 0}}">
           <!--输入框-->
           <view wx:if="{{item.input_type == 0}}" class='create_content'>
-              <input placeholder="{{item.def_val}}" class='text_input' bindinput='bindKeyInput' type='{{item.itype}}' data-i="{{index}}" maxlength='{{item.text_len_limit}}'></input>
+              <input placeholder="{{item.field_name}}" class='text_input' bindinput='bindKeyInput' data-i="{{index}}"></input>
           </view>
           <!--下拉框-->
           <view wx:if="{{item.input_type == 1}}" class='create_content_select'>
@@ -35,7 +35,7 @@
 
   <view class='create_button'>
       <view class="page__bd page__bd_spacing">
-        <button class="weui-btn" type="primary" bindtap='create'>一键生成</button>
+        <button class="weui-btn" type="primary" bindtap='create1'>一键生成</button>
       </view>
   </view>
   <view class='bottom-user'>

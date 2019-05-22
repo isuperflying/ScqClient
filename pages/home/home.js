@@ -27,27 +27,15 @@ Page({
     wx.request({
       url: 'http://192.168.1.3:8899/querysourceinfolist',
       method: 'POST',
-      data: {
-        
-      },
+      data: {},
       success: function (res) {
-        console.log(res.data.data);
+        console.log(res.data);
 
         wx.stopPullDownRefresh();
         list = res.data.data;
-        types = res.data.channel;
-        
-        if(types != null && types.length == 4){
-          types[3]['name'] ="GIF制图";
-          //types[3]['ico'] = "/image/";
-        }
-
-        banners = res.data.banner;
         
         that.setData({
-          array: list,
-          typedata: types,
-          banner: banners
+          array: list
         });
       },
       fail:function(res){
@@ -99,7 +87,8 @@ Page({
     })
   },
   create:function(event){
-    var data = event.currentTarget.dataset.itmedata;
+    var sid = event.currentTarget.dataset.sid;
+    console.log('sid--->' + sid)
     //加锁
     // if (data.is_vip == 1){
     //   this.setData({
@@ -110,7 +99,7 @@ Page({
     
     wx.navigateTo({
       //url: '../createbefore/createbefore?itemdata=' + encodeURIComponent(JSON.stringify(data))
-      url: '../createbefore/createbefore?id=' + data.id
+      url: '../createbefore/createbefore?id=' + sid
     })
   },
 
