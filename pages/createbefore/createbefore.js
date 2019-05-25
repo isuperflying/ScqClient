@@ -1,3 +1,4 @@
+var dateUtil = require('../../utils/util.js');
 var data_files;
 var crop_path = '/pages/image/add_img_icon.png';
 var item_id;
@@ -24,7 +25,8 @@ Page({
     wx.showLoading({
       title: '加载中',
     })
-
+    
+    
     // if (options != null && options.itemdata != null) {
     //   data_files = JSON.parse(decodeURIComponent(options.itemdata));
     //   wx.setStorage({
@@ -212,18 +214,30 @@ Page({
 
   create1:function(event){
     console.log(data_files)
-    // let tempInput = "{\"in_data\":[";
-    // for (var i = 0; i < data_files.length; i++) {
-    //   var sval = data_files[i]["sval"] || "";
-    //   tempInput += "\"" + sval + "\"";
-    //   if (i < data_files.length-1){
-    //     tempInput += ","
-    //   }
-    // }
+    
     let inputs = []
     for (var i = 0; i < data_files.length; i++) {
       var sval = data_files[i]["sval"] || "";
-      inputs.push(sval)
+      let is_visable = data_files[i].is_visable;
+      let hide_type = data_files[i].hide_type
+      if(is_visable == 0){
+        inputs.push(sval)
+      }else{
+        if (hide_type == 0){//姓名
+          let getFieldIndex = parseInt(data_files[i].hide_value);
+
+          inputs.push(data_files[getFieldIndex]["sval"])
+        }
+
+        if (hide_type == 1){//时间
+          let hideValue = data_files[i].hide_value;
+          let timestamp = Date.parse(new Date());
+          console.log('timestamp--->' + timestamp)
+          let dateStr = dateUtil.formatTimeTwo(timestamp, hideValue);
+          inputs.push(dateStr)
+        }
+      }
+
     }
     console.log(inputs)
 
@@ -232,7 +246,7 @@ Page({
       method: 'POST',
       data: {
         'in_data': inputs,
-        'sid':2
+        'sid':3
       },
       success: function (res) {
 

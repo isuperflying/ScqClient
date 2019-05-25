@@ -27,7 +27,9 @@ Page({
     wx.request({
       url: 'http://192.168.1.3:8899/querysourceinfolist',
       method: 'POST',
-      data: {},
+      data: {
+        page:1
+      },
       success: function (res) {
         console.log(res.data);
 
