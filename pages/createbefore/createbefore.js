@@ -240,7 +240,7 @@ Page({
 
     }
     console.log(inputs)
-
+    console.log(crop_path)
     wx.request({
       url: 'http://192.168.1.3:8899/createzbimage',
       method: 'POST',
@@ -250,9 +250,9 @@ Page({
       },
       success: function (res) {
 
-        console.log(res.data);
+        console.log(res.data.data.file_name);
         wx.navigateTo({
-          url: '../result/result?rimg=' + res.data.data + '&title=' + data_files.title
+          url: '../result/result?rimg=' + res.data.data.file_name + '&title=' + data_files.title
         })
       },
       fail: function (res) {

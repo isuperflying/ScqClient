@@ -3,10 +3,12 @@ var downUrl;
 var pre_img;
 var show_tip = true;
 var res_title;
+var baseUrl = 'http://192.168.1.3:8899/'
 Page({
   data:{
     result_img:'/pages/image/no_data.png',
-    showModalStatus: true
+    showModalStatus: true,
+    baseUrl:baseUrl
   },
   onShareAppMessage:function(res){
     if (res.from === 'button') {
@@ -44,7 +46,7 @@ Page({
     pre_img = options.rimg;
     res_title = options.title;
     this.setData({
-      result_img: options.rimg
+      result_img: baseUrl + options.rimg
     })
 
     // wx.getImageInfo({
