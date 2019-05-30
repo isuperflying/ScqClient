@@ -1,5 +1,5 @@
 <view class='create-view'>
-    <image mode='widthFix' src='{{baseUrl + cimg}}' class='create-image' bindtap='preimage' bindload='loadDone'></image>
+    <image mode='widthFix' src='{{cimg}}' class='create-image' bindtap='preimage' bindload='loadDone'></image>
 </view>
 
 <view>

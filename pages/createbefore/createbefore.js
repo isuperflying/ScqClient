@@ -16,7 +16,7 @@ Page({
     add_img: crop_path,
     swidth: 0,
     sheight: 0,
-    baseUrl:baseUrl
+    baseUrl: baseUrl
   },
   onLoad: function (options) {
     //进入时设置初始图片
@@ -25,8 +25,8 @@ Page({
     wx.showLoading({
       title: '加载中',
     })
-    
-    
+
+
     // if (options != null && options.itemdata != null) {
     //   data_files = JSON.parse(decodeURIComponent(options.itemdata));
     //   wx.setStorage({
@@ -43,7 +43,7 @@ Page({
     //   })
     // }
 
-    console.log('id--->'+options.id)
+    console.log('id--->' + options.id)
     var that = this;
     wx.request({
       url: 'http://192.168.1.3:8899/queryscinfobyid',
@@ -54,12 +54,12 @@ Page({
       success: function (res) {
         console.log(res.data.data)
         wx.hideLoading()
-        data_files = res.data.data.fields;
-        //that.initData();
-        that.setData({
-          params: data_files,
-          cimg: res.data.data.sc_pre_img
-        })
+        data_files = res.data.data;
+        that.initData();
+        // that.setData({
+        //   params: data_files,
+        //   cimg: res.data.data.sc_pre_img
+        // })
       },
       fail: function (res) {
         wx.hideLoading()
@@ -69,27 +69,27 @@ Page({
 
   },
 
-  initData:function(){
-    if(data_files == null){
+  initData: function () {
+    if (data_files == null) {
       wx.showToast({
         title: '数据有误，请重试',
       })
       return;
     }
     item_id = data_files.id;
-    pre_img = data_files.front_img;
+    pre_img = data_files.sc_before_img;
 
     wx.setNavigationBarTitle({
-      title: data_files.title
+      title: data_files.sc_name
     })
 
-    console.log(data_files.template[0].width);
+    //console.log(data_files.template[0].width);
 
     //console.log("itemdata--->" + data_files.field);
 
     if (data_files != null) {
-      console.log(data_files.front_img)
-      data_files['field'].forEach(obj => {
+      console.log(data_files.sc_before_img)
+      data_files['fields'].forEach(obj => {
         if (obj['select']) {
           obj['select_value'] = []
           obj['select'].forEach(selectObj => {
@@ -102,45 +102,45 @@ Page({
           obj['sval'] = obj['select_value'][0]
         }
         if (obj['input_type'] > 1) {
-          width = obj.x2 - obj.x1;
-          height = obj.y2 - obj.y1;
+          width = obj.second_pointx - obj.first_pointx;
+          height = obj.second_pointy - obj.first_pointy;
           console.log(width + "---" + height)
         }
 
-        var itype = parseInt(obj['restrain'])
-        switch (itype) {
-          case 0:
-            obj['itype'] = 'text'
-            break
-          case 1:
-            obj['itype'] = 'number'
-            break
-          case 2:
-            obj['itype'] = 'text'
-            break
-          case 3:
-            obj['itype'] = 'text'
-            break
-        }
+        // var itype = parseInt(obj['restrain'])
+        // switch (itype) {
+        //   case 0:
+        //     obj['itype'] = 'text'
+        //     break
+        //   case 1:
+        //     obj['itype'] = 'number'
+        //     break
+        //   case 2:
+        //     obj['itype'] = 'text'
+        //     break
+        //   case 3:
+        //     obj['itype'] = 'text'
+        //     break
+        // }
         console.log(obj)
       })
 
-      var tempheight = data_files.template[0].height
-      var tempwidth = data_files.template[0].width
+      var tempheight = data_files.sc_img_height
+      var tempwidth = data_files.sc_img_width
       if (tempheight > 1200) {
         tempwidth = tempwidth / tempheight * 860
         tempheight = 860
       }
 
-      console.log(tempwidth + "nnn" + tempheight)
+      console.log(tempwidth + "--->" + tempheight)
 
       this.setData({
-        cimg: data_files.front_img,
-        params: data_files.field,
+        cimg: baseUrl + data_files.sc_before_img,
+        params: data_files.fields,
         add_img: crop_path,
         swidth: parseInt(tempwidth),
         sheight: parseInt(tempheight),
-        author_name: data_files.author
+        author_name: 'xxx'
       },
         function (options) {
           //console.log('done')
@@ -172,7 +172,7 @@ Page({
     }
   },
   bindPickerChange: function (e) {
-    
+
     var pos = e.detail.value;
     var pselects = e.currentTarget.dataset.select;
     var index = e.currentTarget.dataset.index;
@@ -183,7 +183,7 @@ Page({
     var flag_input = false;
     if (pselects[pos].indexOf("自定义") > -1) {
       item['flag_input'] = true;
-    }else{
+    } else {
       item['flag_input'] = false;
     }
     console.log(item)
@@ -206,30 +206,30 @@ Page({
   bindKeyInput(e) {
     console.log(e)
     let i = e.currentTarget.dataset.i
-    
+
     data_files[i]['sval'] = e.detail.value
     console.log(data_files[i]['sval'])
-    
+
   },
 
-  create1:function(event){
+  create1: function (event) {
     console.log(data_files)
-    
+
     let inputs = []
     for (var i = 0; i < data_files.length; i++) {
       var sval = data_files[i]["sval"] || "";
       let is_visable = data_files[i].is_visable;
       let hide_type = data_files[i].hide_type
-      if(is_visable == 0){
+      if (is_visable == 0) {
         inputs.push(sval)
-      }else{
-        if (hide_type == 0){//姓名
+      } else {
+        if (hide_type == 0) {//姓名
           let getFieldIndex = parseInt(data_files[i].hide_value);
 
           inputs.push(data_files[getFieldIndex]["sval"])
         }
 
-        if (hide_type == 1){//时间
+        if (hide_type == 1) {//时间
           let hideValue = data_files[i].hide_value;
           let timestamp = Date.parse(new Date());
           console.log('timestamp--->' + timestamp)
@@ -241,25 +241,42 @@ Page({
     }
     console.log(inputs)
     console.log(crop_path)
-    wx.request({
-      url: 'http://192.168.1.3:8899/createzbimage',
-      method: 'POST',
-      data: {
-        'in_data': inputs,
-        'sid':3
-      },
-      success: function (res) {
+    if (crop_path) {
+      wx.uploadFile({
+        url: 'http://192.168.1.3:8899/createzbimage1',
+        name: 'file',
+        filePath: crop_path,
+        formData: {
+          'in_data': '{"test":"12123"}',
+          'sid': item_id
+        },
+        success: function (res) {
+          console.log('upload file success --->' + res.data);
+        },
+        fail: function (res) {
+          console.log("create fail--->" + JSON.stringify(res));
+        }
+      })
+    } else {
+      wx.request({
+        url: 'http://192.168.1.3:8899/createzbimage',
+        method: 'POST',
+        data: {
+          'in_data': inputs,
+          'sid': item_id
+        },
+        success: function (res) {
 
-        console.log(res.data.data.file_name);
-        wx.navigateTo({
-          url: '../result/result?rimg=' + res.data.data.file_name + '&title=' + data_files.title
-        })
-      },
-      fail: function (res) {
-        console.log("fail2--->" + JSON.stringify(res));
-      }
-    })
-
+          console.log(res.data.data.file_name);
+          wx.navigateTo({
+            url: '../result/result?rimg=' + res.data.data.file_name + '&title=' + data_files.title
+          })
+        },
+        fail: function (res) {
+          console.log("fail2--->" + JSON.stringify(res));
+        }
+      })
+    }
   },
 
   //一键生成
@@ -316,10 +333,10 @@ Page({
 
     requestData += "}";
 
-    if(requestData.indexOf(',,') > -1){
-      requestData = requestData.replace(',,',',');
+    if (requestData.indexOf(',,') > -1) {
+      requestData = requestData.replace(',,', ',');
     }
-    
+
     console.log("去除多余的值--->" + requestData);
 
     console.log(img ? "img" : "noimg")
@@ -371,7 +388,7 @@ Page({
           'content-type': 'application/x-www-form-urlencoded' // 默认值
         },
         success: function (res) {
-          
+
           console.log(res.data);
           wx.navigateTo({
             url: '../result/result?rimg=' + res.data.data + '&title=' + data_files.title
