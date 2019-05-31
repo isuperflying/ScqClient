@@ -199,6 +199,7 @@ Page({
     data_files['field'][index]['sval'] = pselects[pos];
   },
   selectImage: function (event) {
+    console.log('select image --->' + width + '---' + height);
     wx.navigateTo({
       url: '../cutInside/cutInside?width=' + width + '&height=' + height
     })

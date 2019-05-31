@@ -90,7 +90,7 @@ Page({
       id: 'cropper',
       width,
       height,
-      scale: 2.5,
+      scale: 1.5,
       zoom: 8,
       cut: {
         x: (width - cwidth) / 2,
