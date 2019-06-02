@@ -252,12 +252,11 @@ Page({
     console.log('img path --->' + img)
     if (img) {
       wx.uploadFile({
-        url: 'http://192.168.1.3:8899/createzbimage',
-        method: 'POST',
+        url: 'http://192.168.1.3:8899/createzbimage2',
         name: 'file',
         filePath: crop_path,
         formData: {
-          'in_data':inputs,
+          'in_data': inputs.toString(),
           'sid': item_id
         },
         success: function (res) {
