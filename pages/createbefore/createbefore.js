@@ -1,4 +1,5 @@
 var dateUtil = require('../../utils/util.js');
+var scInfo;
 var data_files;
 var crop_path = '/pages/image/add_img_icon.png';
 var item_id;
@@ -54,7 +55,17 @@ Page({
       success: function (res) {
         console.log(res.data.data)
         wx.hideLoading()
-        data_files = res.data.data;
+
+        scInfo = res.data.data;
+        data_files = scInfo['fields'];
+
+        item_id = scInfo.id;
+        pre_img = scInfo.sc_before_img;
+
+        wx.setNavigationBarTitle({
+          title: scInfo.sc_name
+        })
+
         that.initData();
         // that.setData({
         //   params: data_files,
@@ -76,20 +87,14 @@ Page({
       })
       return;
     }
-    item_id = data_files.id;
-    pre_img = data_files.sc_before_img;
-
-    wx.setNavigationBarTitle({
-      title: data_files.sc_name
-    })
-
+    
     //console.log(data_files.template[0].width);
 
     //console.log("itemdata--->" + data_files.field);
 
     if (data_files != null) {
-      console.log(data_files.sc_before_img)
-      data_files['fields'].forEach(obj => {
+      //console.log(data_files.sc_before_img)
+      data_files.forEach(obj => {
         if (obj['select']) {
           obj['select_value'] = []
           obj['select'].forEach(selectObj => {
@@ -125,8 +130,8 @@ Page({
         console.log(obj)
       })
 
-      var tempheight = data_files.sc_img_height
-      var tempwidth = data_files.sc_img_width
+      var tempheight = scInfo.sc_img_height
+      var tempwidth = scInfo.sc_img_width
       if (tempheight > 1200) {
         tempwidth = tempwidth / tempheight * 860
         tempheight = 860
@@ -135,8 +140,8 @@ Page({
       console.log(tempwidth + "--->" + tempheight)
 
       this.setData({
-        cimg: baseUrl + data_files.sc_before_img,
-        params: data_files.fields,
+        cimg: baseUrl + scInfo.sc_before_img,
+        params: scInfo.fields,
         add_img: crop_path,
         swidth: parseInt(tempwidth),
         sheight: parseInt(tempheight),
@@ -207,20 +212,21 @@ Page({
   bindKeyInput(e) {
     console.log(e)
     let i = e.currentTarget.dataset.i
-
-    data_files[i]['sval'] = e.detail.value
-    console.log(data_files[i]['sval'])
+    console.log(scInfo['fields'])
+    scInfo['fields'][i]['sval'] = e.detail.value
+    console.log('input--->' + scInfo['fields'][i]['sval'])
 
   },
 
   create1: function (event) {
     console.log(data_files)
-
+    var img = ''
     let inputs = []
     for (var i = 0; i < data_files.length; i++) {
       var sval = data_files[i]["sval"] || "";
       let is_visable = data_files[i].is_visable;
       let hide_type = data_files[i].hide_type
+      let input_type = data_files[i].input_type
       if (is_visable == 0) {
         inputs.push(sval)
       } else {
@@ -238,17 +244,20 @@ Page({
           inputs.push(dateStr)
         }
       }
-
+      if (input_type == 4){
+        img = crop_path
+      }
     }
     console.log(inputs)
-    console.log(crop_path)
-    if (crop_path) {
+    console.log('img path --->' + img)
+    if (img) {
       wx.uploadFile({
-        url: 'http://192.168.1.3:8899/createzbimage1',
+        url: 'http://192.168.1.3:8899/createzbimage',
+        method: 'POST',
         name: 'file',
         filePath: crop_path,
         formData: {
-          'in_data': '{"test":"12123"}',
+          'in_data':inputs,
           'sid': item_id
         },
         success: function (res) {
@@ -260,7 +269,7 @@ Page({
       })
     } else {
       wx.request({
-        url: 'http://192.168.1.3:8899/createzbimage',
+        url: 'http://192.168.1.3:8899/createzbimage1',
         method: 'POST',
         data: {
           'in_data': inputs,
