@@ -5,9 +5,9 @@
             <view class="ul">
                 <view class="li" wx:for="{{array}}" wx:key="{{index}}" wx:for-item="item" bindtap='create' data-itmedata='{{item}}'>
                     <view>
-                        <image src="{{item.small_img}}" mode="widthFix" class='item-img'></image>
+                        <image src="{{baseUrl + item.sc_thumb}}" mode="widthFix" class='item-img'></image>
                         <!-- <image src='../image/is_vip.png' class='is-vip' wx:if="{{item.is_vip == 1}}"></image> -->
-                        <text>{{item.title}}</text>
+                        <text>{{item.sc_name}}</text>
                         <view class="bg"></view>
                     </view>
                 </view>

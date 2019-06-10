@@ -3,7 +3,7 @@
     autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
     <block wx:for="{{banner}}"  wx:key="id" wx:for-item="item">
       <swiper-item>
-          <image src="{{item.c_img}}" class="slide-image" mode='widthFix' bindtap='banner' data-item='{{item}}'/>
+          <image src="{{baseUrl + item.cover}}" class="slide-image" mode='widthFix' bindtap='banner' data-item='{{item}}'/>
       </swiper-item>
     </block>
 </swiper>
@@ -24,7 +24,7 @@
                 <view>
                     <image src="{{baseUrl + item.sc_thumb}}" mode="widthFix" class='item-img'></image>
                     <!-- <image src='../image/is_vip.png' class='is-vip' wx:if="{{item.is_vip == 1}}"></image> -->
-                    <text>{{item.title}}</text>
+                    <text>{{item.sc_name}}</text>
                     <view class="bg"></view>
                 </view>
             </view>

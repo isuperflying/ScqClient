@@ -42,8 +42,8 @@ Page({
     }
     console.log("onLoad img --->" + options.rimg);
 
-    downUrl = options.rimg;
-    pre_img = options.rimg;
+    downUrl = baseUrl + options.rimg;
+    pre_img = baseUrl + options.rimg;
     res_title = options.title;
     this.setData({
       result_img: baseUrl + options.rimg

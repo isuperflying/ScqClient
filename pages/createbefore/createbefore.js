@@ -227,25 +227,27 @@ Page({
       let is_visable = data_files[i].is_visable;
       let hide_type = data_files[i].hide_type
       let input_type = data_files[i].input_type
-      if (is_visable == 0) {
-        inputs.push(sval)
-      } else {
-        if (hide_type == 0) {//姓名
-          let getFieldIndex = parseInt(data_files[i].hide_value);
-
-          inputs.push(data_files[getFieldIndex]["sval"])
-        }
-
-        if (hide_type == 1) {//时间
-          let hideValue = data_files[i].hide_value;
-          let timestamp = Date.parse(new Date());
-          console.log('timestamp--->' + timestamp)
-          let dateStr = dateUtil.formatTimeTwo(timestamp, hideValue);
-          inputs.push(dateStr)
-        }
-      }
+      
       if (input_type == 4){
         img = crop_path
+      }else{
+        if (is_visable == 0) {
+          inputs.push(sval)
+        } else {
+          if (hide_type == 0) {//姓名
+            let getFieldIndex = parseInt(data_files[i].hide_value);
+
+            inputs.push(data_files[getFieldIndex]["sval"])
+          }
+
+          if (hide_type == 1) {//时间
+            let hideValue = data_files[i].hide_value;
+            let timestamp = Date.parse(new Date());
+            console.log('timestamp--->' + timestamp)
+            let dateStr = dateUtil.formatTimeTwo(timestamp, hideValue);
+            inputs.push(dateStr)
+          }
+        }
       }
     }
     console.log(inputs)
@@ -256,11 +258,15 @@ Page({
         name: 'file',
         filePath: crop_path,
         formData: {
-          'in_data': inputs.toString(),
+          'in_data': inputs == null || inputs.length == 0 ? '':JSON.stringify(inputs),
           'sid': item_id
         },
         success: function (res) {
-          console.log('upload file success --->' + res.data);
+          var obj = JSON.parse(res.data)
+          console.log(obj.data);
+          wx.navigateTo({
+            url: '../result/result?rimg=' + obj.data.file_name + '&title=' + scInfo.sc_name
+          })
         },
         fail: function (res) {
           console.log("create fail--->" + JSON.stringify(res));

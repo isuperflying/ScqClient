@@ -10,7 +10,11 @@ var baseUrl = 'http://192.168.1.3:8899/'
 Page({
   data: {
     array: [],
-    typedata:[],
+    typedata: [
+      {'id':'1','ico':'../image/t1.png','name':'表白'},
+      { 'id': '2','ico': '../image/t2.png', 'name': '恶搞' },
+      { 'id': '3','ico': '../image/t3.png', 'name': '炫富' },
+      { 'id': '4','ico': '../image/t4.png', 'name': '证书' }],
     indicatorDots: true,
     autoplay: true,
     interval: 3000,
@@ -34,10 +38,12 @@ Page({
         console.log(res.data);
 
         wx.stopPullDownRefresh();
-        list = res.data.data;
-        
+        list = res.data.data.sourcelist;
+        banners = res.data.data.specials;
+        console.log(banners);
         that.setData({
-          array: list
+          array: list,
+          banner: banners
         });
       },
       fail:function(res){
@@ -52,7 +58,7 @@ Page({
     var Page$this = this;
     this.getHomeData(Page$this);
     wx.setNavigationBarTitle({
-      title: '腾牛生成神器'
+      title: '趣图生成器'
     })
   },
 
@@ -123,17 +129,17 @@ Page({
   category:function(event){
     var index = event.currentTarget.dataset.index;
     console.log(index);
-    if(index == 3){
-      // this.setData({
-      //   showModal: true
-      // });
+    // if(index == 3){
+    //   // this.setData({
+    //   //   showModal: true
+    //   // });
 
-      wx.navigateTo({
-        url: '../collection/collection'
-      })
+    //   wx.navigateTo({
+    //     url: '../collection/collection'
+    //   })
 
-      return;
-    }
+    //   return;
+    // }
 
     var type_item = event.currentTarget.dataset.item;
     

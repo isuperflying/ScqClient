@@ -5,6 +5,7 @@ var type_id;
 var banner_id;
 var use_id;
 var mtype;
+var baseUrl = 'http://192.168.1.3:8899/'
 Page({
   data: {
     isShow: true,
@@ -12,6 +13,7 @@ Page({
     array: [],
     showModal: false,
     is_load_more: false,
+    baseUrl: baseUrl
   },
 
   onLoad: function (options){
@@ -96,30 +98,25 @@ Page({
     //console.log("user_id ---" + type_id)
 
     console.log("page--->" + page)
-    var rurl = 'https://nz.qqtn.com/zbsq/index.php?m=Home&c=zbsq&a=getCateList';
-    if (gtype == 2){
-      rurl = 'https://nz.qqtn.com/zbsq/index.php?m=Home&c=zbsq&a=getSlideMore';
-    }
+    var rurl = 'http://192.168.1.3:8899/querysourceinfolist'
     //最新
     wx.request({
-      url: rurl,
+      url: 'http://192.168.1.3:8899/querysourceinfolist',
       method: 'POST',
       data: {
         'page': page,
-        'id': use_id
-      },
-      header: {
-        'content-type': 'application/x-www-form-urlencoded' // 默认值
+        'typeid': use_id
       },
       success: function (res) {
+        console.log(res.data.data)
         wx.hideLoading()
         wx.stopPullDownRefresh()
         if(list != null){
           console.log("concat---->");
-          list = list.concat(res.data.data);
+          list = list.concat(res.data.data.sourcelist);
         }else{
           console.log("new---->");
-          list = res.data.data;
+          list = res.data.data.sourcelist;
         }
 
         that.setData({
