@@ -11,16 +11,12 @@
           </view>
           <!--下拉框-->
           <view wx:if="{{item.input_type == 1}}" class='create_content_select'>
-              <picker bindchange="bindPickerChange" value="{{item['position']}}" range="{{item['select_value']}}" class='select_bg' 
-                data-select="{{item['select_value']}}" data-index="{{index}}">
+              <picker bindchange="bindPickerChange" value="{{pindex}}" range="{{item.range}}" class='select_bg' data-pindex="{{pindex}}" data-index='{{index}}' data-range='{{item.range}}'>
                  <view class="create_content_select_item"> 
-                     <label>{{item['select'][item['position']]['opt_text']}}</label>
+                     <label>{{item.range[pindex]}}</label>
                      <image src='../image/down_select_icon.png'></image>
                   </view>
               </picker>
-              <view wx-if='{{item["flag_input"]}}' class='create_content_select_input'>
-                <input placeholder="请输入自定义值" bindinput='bindKeyInput' data-i="{{index}}" class='text_input'></input>
-              </view>
           </view>
           <!--图片-->
           <view wx:if="{{item.input_type == 2 || item.input_type == 3 || item.input_type == 4}}" class='create_select_img_item'>

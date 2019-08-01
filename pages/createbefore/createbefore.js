@@ -7,7 +7,7 @@ var pre_img;
 const app = getApp()
 var width;
 var height;
-var baseUrl = 'http://192.168.1.3:8899/'
+var baseUrl = 'http://192.168.1.2:8899/'
 Page({
   data: {
     cimg: '',
@@ -17,7 +17,8 @@ Page({
     add_img: crop_path,
     swidth: 0,
     sheight: 0,
-    baseUrl: baseUrl
+    baseUrl: baseUrl,
+    pindex:0
   },
   onLoad: function (options) {
     //进入时设置初始图片
@@ -47,7 +48,7 @@ Page({
     console.log('id--->' + options.id)
     var that = this;
     wx.request({
-      url: 'http://192.168.1.3:8899/queryscinfobyid',
+      url: 'http://192.168.1.2:8899/queryscinfobyid',
       method: 'POST',
       data: {
         'sid': options.id
@@ -57,7 +58,7 @@ Page({
         wx.hideLoading()
 
         scInfo = res.data.data;
-        data_files = scInfo['fields'];
+        data_files = scInfo.fields;
 
         item_id = scInfo.id;
         pre_img = scInfo.sc_before_img;
@@ -95,16 +96,19 @@ Page({
     if (data_files != null) {
       //console.log(data_files.sc_before_img)
       data_files.forEach(obj => {
-        if (obj['select']) {
-          obj['select_value'] = []
-          obj['select'].forEach(selectObj => {
-            var opt_text = selectObj['opt_text']
-            obj['select_value'].push(opt_text)
-          })
+        if (obj['input_type'] == 1) {
+          // obj['select_value'] = []
+          // obj['select'].forEach(selectObj => {
+          //   var opt_text = selectObj['opt_text']
+          //   obj['select_value'].push(opt_text)
+          // })
 
-          //设置默认值
-          obj['position'] = 0;
-          obj['sval'] = obj['select_value'][0]
+          // //设置默认值
+          // obj['position'] = 0;
+          // obj['sval'] = obj['select_value'][0]
+
+          let ranges = obj.option_txt.split('#');
+          obj['range'] = ranges
         }
         if (obj['input_type'] > 1) {
           width = obj.second_pointx - obj.first_pointx;
@@ -141,7 +145,7 @@ Page({
 
       this.setData({
         cimg: baseUrl + scInfo.sc_before_img,
-        params: scInfo.fields,
+        params: data_files,
         add_img: crop_path,
         swidth: parseInt(tempwidth),
         sheight: parseInt(tempheight),
@@ -177,31 +181,16 @@ Page({
     }
   },
   bindPickerChange: function (e) {
-
+    let findex = e.currentTarget.dataset.index
+    let range = e.currentTarget.dataset.range
+    
     var pos = e.detail.value;
-    var pselects = e.currentTarget.dataset.select;
-    var index = e.currentTarget.dataset.index;
-    var item = data_files['field'][index];
-    item['position'] = pos;
-    console.log("index--->" + index)
-    //自定义
-    var flag_input = false;
-    if (pselects[pos].indexOf("自定义") > -1) {
-      item['flag_input'] = true;
-    } else {
-      item['flag_input'] = false;
-    }
-    console.log(item)
+    console.log("pos--->" + pos)
     this.setData({
-      params: data_files['field'],
-      flag_input: flag_input
+      pindex: pos
     })
-
-    console.log(`flag --->${flag_input}`)
-
-    console.log('sval--->' + pselects[pos])
-
-    data_files['field'][index]['sval'] = pselects[pos];
+    console.log("picker select value--->" + range[pos])
+    data_files[findex]['sval'] = range[pos]
   },
   selectImage: function (event) {
     console.log('select image --->' + width + '---' + height);
@@ -254,7 +243,7 @@ Page({
     console.log('img path --->' + img)
     if (img) {
       wx.uploadFile({
-        url: 'http://192.168.1.3:8899/createzbimage2',
+        url: 'http://192.168.1.2:8899/createzbimage2',
         name: 'file',
         filePath: crop_path,
         formData: {
@@ -274,7 +263,7 @@ Page({
       })
     } else {
       wx.request({
-        url: 'http://192.168.1.3:8899/createzbimage1',
+        url: 'http://192.168.1.2:8899/createzbimage1',
         method: 'POST',
         data: {
           'in_data': inputs,
