@@ -108,7 +108,9 @@ Page({
           // obj['sval'] = obj['select_value'][0]
 
           let ranges = obj.option_txt.split('#');
-          obj['range'] = ranges
+          obj['range'] = ranges;
+          //默认赋值
+          obj['sval'] = ranges[0]
         }
         if (obj['input_type'] > 1) {
           width = obj.second_pointx - obj.first_pointx;
