@@ -1,4 +1,5 @@
 var dateUtil = require('../../utils/util.js');
+let wechat = require('../../utils/wechat.js');
 var scInfo;
 var data_files;
 var crop_path = '/pages/image/add_img_icon.png';
@@ -7,7 +8,10 @@ var pre_img;
 const app = getApp()
 var width;
 var height;
-var baseUrl = 'http://192.168.80.97:8899/'
+var baseUrl = 'http://192.168.1.3:8899/'
+
+var jump_type = 1 //生成
+
 Page({
   data: {
     cimg: '',
@@ -48,7 +52,7 @@ Page({
     console.log('id--->' + options.id)
     var that = this;
     wx.request({
-      url: 'http://192.168.80.97:8899/queryscinfobyid',
+      url: 'http://192.168.1.3:8899/queryscinfobyid',
       method: 'POST',
       data: {
         'sid': options.id
@@ -209,6 +213,41 @@ Page({
 
   },
 
+
+
+  userLogin: function (e) {
+    jump_type = 1
+    this.getUserInfo();
+  },
+
+  getUserInfo() {
+    var that = this
+    wechat.getCryptoData2()
+      .then(d => {
+        return wechat.getMyData(d);
+      })
+      .then(d => {
+        console.log("从后端获取的用户信息--->", d.data);
+        userInfo = d.data.data
+        wechat.saveUserInfo(userInfo)
+        app.globalData.userInfo = userInfo
+        that.data.is_login = true
+        if (jump_type == 1) {
+          that.basetrain()
+        } else if (jump_type == 2) {
+          that.rankList()
+        } else if (jump_type == 3) {
+          that.todaySignState()
+        } else {
+          that.mycollect()
+        }
+
+      })
+      .catch(e => {
+        console.log(e);
+      })
+  },
+
   create1: function (event) {
     console.log(data_files)
     var img = ''
@@ -245,7 +284,7 @@ Page({
     console.log('img path --->' + img)
     if (img) {
       wx.uploadFile({
-        url: 'http://192.168.80.97:8899/createzbimage2',
+        url: 'http://192.168.1.3:8899/createzbimage2',
         name: 'file',
         filePath: crop_path,
         formData: {
@@ -265,7 +304,7 @@ Page({
       })
     } else {
       wx.request({
-        url: 'http://192.168.80.97:8899/createzbimage1',
+        url: 'http://192.168.1.3:8899/createzbimage1',
         method: 'POST',
         data: {
           'in_data': inputs,

@@ -31,7 +31,7 @@
 
   <view class='create_button'>
       <view class="page__bd page__bd_spacing">
-        <button class="weui-btn" type="primary" bindtap='create1'>一键生成</button>
+        <button class="weui-btn" type="primary" bindgetuserinfo='userLogin' open-type='getUserInfo'>一键生成</button>
       </view>
   </view>
   <view class='bottom-user'>

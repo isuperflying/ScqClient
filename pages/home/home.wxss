@@ -81,7 +81,7 @@
     color:#fff;
 }
 .is-vip{
-  width: 50rpx;
+  width: 69rpx;
   height: 50rpx;
   position: absolute;
   top:0;
