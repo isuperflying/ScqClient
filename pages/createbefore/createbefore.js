@@ -7,7 +7,7 @@ var pre_img;
 const app = getApp()
 var width;
 var height;
-var baseUrl = 'http://192.168.1.2:8899/'
+var baseUrl = 'http://192.168.80.97:8899/'
 Page({
   data: {
     cimg: '',
@@ -48,7 +48,7 @@ Page({
     console.log('id--->' + options.id)
     var that = this;
     wx.request({
-      url: 'http://192.168.1.2:8899/queryscinfobyid',
+      url: 'http://192.168.80.97:8899/queryscinfobyid',
       method: 'POST',
       data: {
         'sid': options.id
@@ -245,7 +245,7 @@ Page({
     console.log('img path --->' + img)
     if (img) {
       wx.uploadFile({
-        url: 'http://192.168.1.2:8899/createzbimage2',
+        url: 'http://192.168.80.97:8899/createzbimage2',
         name: 'file',
         filePath: crop_path,
         formData: {
@@ -265,7 +265,7 @@ Page({
       })
     } else {
       wx.request({
-        url: 'http://192.168.1.2:8899/createzbimage1',
+        url: 'http://192.168.80.97:8899/createzbimage1',
         method: 'POST',
         data: {
           'in_data': inputs,

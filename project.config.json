@@ -17,7 +17,7 @@
 		}
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.8.0",
+	"libVersion": "2.7.7",
 	"appid": "wx40695c0d4227eccc",
 	"projectname": "ScqClient",
 	"isGameTourist": false,

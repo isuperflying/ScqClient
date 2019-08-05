@@ -3,7 +3,7 @@ var downUrl;
 var pre_img;
 var show_tip = true;
 var res_title;
-var baseUrl = 'http://192.168.1.2:8899/'
+var baseUrl = 'http://192.168.80.97:8899/'
 Page({
   data:{
     result_img:'/pages/image/no_data.png',
