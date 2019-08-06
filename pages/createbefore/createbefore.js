@@ -8,10 +8,10 @@ var pre_img;
 const app = getApp()
 var width;
 var height;
-var baseUrl = 'http://192.168.1.3:8899/'
-
+var baseUrl = 'http://192.168.80.97:8899/'
+let userInfo
 var jump_type = 1 //生成
-
+var user_is_vip = false
 Page({
   data: {
     cimg: '',
@@ -22,7 +22,8 @@ Page({
     swidth: 0,
     sheight: 0,
     baseUrl: baseUrl,
-    pindex:0
+    pindex:0,
+    showModal: false
   },
   onLoad: function (options) {
     //进入时设置初始图片
@@ -52,7 +53,7 @@ Page({
     console.log('id--->' + options.id)
     var that = this;
     wx.request({
-      url: 'http://192.168.1.3:8899/queryscinfobyid',
+      url: 'http://192.168.80.97:8899/queryscinfobyid',
       method: 'POST',
       data: {
         'sid': options.id
@@ -233,15 +234,11 @@ Page({
         app.globalData.userInfo = userInfo
         that.data.is_login = true
         if (jump_type == 1) {
-          that.basetrain()
-        } else if (jump_type == 2) {
-          that.rankList()
-        } else if (jump_type == 3) {
-          that.todaySignState()
-        } else {
-          that.mycollect()
+          //that.create1();
+          that.setData({
+            showModal: true
+          })
         }
-
       })
       .catch(e => {
         console.log(e);
@@ -284,7 +281,7 @@ Page({
     console.log('img path --->' + img)
     if (img) {
       wx.uploadFile({
-        url: 'http://192.168.1.3:8899/createzbimage2',
+        url: 'http://192.168.80.97:8899/createzbimage2',
         name: 'file',
         filePath: crop_path,
         formData: {
@@ -304,7 +301,7 @@ Page({
       })
     } else {
       wx.request({
-        url: 'http://192.168.1.3:8899/createzbimage1',
+        url: 'http://192.168.80.97:8899/createzbimage1',
         method: 'POST',
         data: {
           'in_data': inputs,
@@ -445,5 +442,74 @@ Page({
       })
     }
 
+  },
+
+
+  vipBuy: function () {
+    var that = this
+    wx.request({
+      url: baseUrl + 'getpayinfo',
+      method: 'POST',
+      data: {
+        openid: userInfo.openId,
+        token: userInfo.token
+      },
+      success: function (res) {
+        console.log(res.data)
+        if (res.data.code == 0) {
+          var timestamp = res.data.data.timestamp + '' //时间戳
+          var nonceStr = res.data.data.nonceStr //随机数
+          var packages = res.data.data.package //prepay_id
+          var paySign = res.data.data.paySign //签名
+          var signType = 'MD5'
+
+          wx.requestPayment({
+            timeStamp: timestamp,
+            nonceStr: nonceStr,
+            package: packages,
+            signType: signType,
+            paySign: paySign,
+            success: function (res) {
+              console.log('pay success----')
+              //console.log(res)
+              wx.showToast({
+                title: '购买成功',
+                icon: 'none'
+              })
+              //支付成功后更改用户的VIP状态
+              user_is_vip = true
+              if (userInfo) {
+                userInfo.is_vip = 1
+                wechat.saveUserInfo(userInfo)
+                app.globalData.userInfo = userInfo
+              }
+
+              current_index++;
+              that.setCurrentWord()
+              that.setData({
+                showModal: false
+              });
+            },
+            fail: function (res) {
+              console.log('pay fail----')
+              console.log(res)
+              wx.showToast({
+                title: '支付失败',
+                icon: 'none'
+              })
+            }
+          })
+        } else {
+          wx.showToast({
+            title: '数据异常，请重试',
+            icon: 'none'
+          })
+        }
+      },
+      fail: function (err) {
+        console.log(err)
+      }
+    })
   }
+
 })
