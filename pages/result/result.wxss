@@ -10,24 +10,31 @@ page{
   width: 96%;
   min-height: 200rpx;
 }
+
+.result-opera-view{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
 .save_button{
-  width: 90%;
+  width: 42%;
   border-radius: 3px;  
   font-size:18px;
-  background-color:#ff8719;  
+  background-color:#17b36a;  
   color:white;
   overflow:hidden;
   height:90rpx;
   line-height: 90rpx;
-  margin-top: 30rpx;
   margin-bottom: 30rpx;
 }
+
 .share_button{
-  width: 90%;
-  border-radius: 3px;  
-  margin:20rpx auto;
+  width: 42%;
+  border-radius: 3px;
   font-size:18px;  
-  background-color:#30bdf7;  
+  background-color:#f0865d;  
   color:white;
   overflow:hidden;
   height:90rpx;

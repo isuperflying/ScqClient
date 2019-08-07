@@ -1,0 +1,31 @@
+/* pages/about/about.wxss */
+.donate{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.info {
+  margin:8px;
+  margin-top: 25px;
+  display: block; 
+  font-size: 15px;
+  font-family:monospace;
+}
+
+.donate-info { 
+  text-align: center;
+  margin-top: 25px;
+  margin-bottom: 10px;
+  font-size: 15px;
+  font-family:monospace;
+  font-weight: bold;
+}
+
+.note {
+  margin:8px;
+  margin-top: 25px;
+  display: block; 
+  font-size: 13px;
+  font-weight: bold;
+  font-family:monospace;
+}

@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/about/about",
     "pages/home/home",
     "pages/cutInside/cutInside",
     "pages/createbefore/createbefore",
@@ -10,6 +11,7 @@
     "pages/gifresult/gifresult",
     "pages/logs/logs",
     "pages/myinfo/myinfo"
+    
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -8,7 +8,7 @@ var pre_img;
 const app = getApp()
 var width;
 var height;
-var baseUrl = 'http://192.168.1.3:8899/'
+var baseUrl = 'http://192.168.80.97:8899/'
 let userInfo
 var jump_type = 1 //生成
 var user_is_vip = false
@@ -33,6 +33,9 @@ Page({
       title: '加载中',
     })
 
+    userInfo = app.globalData.userInfo || wx.getStorageSync('user_info')
+    //user_is_vip = userInfo.is_vip == 1 ? true : false
+    console.log(userInfo)
 
     // if (options != null && options.itemdata != null) {
     //   data_files = JSON.parse(decodeURIComponent(options.itemdata));
@@ -53,7 +56,7 @@ Page({
     console.log('id--->' + options.id)
     var that = this;
     wx.request({
-      url: 'http://192.168.1.3:8899/queryscinfobyid',
+      url: 'http://192.168.80.97:8899/queryscinfobyid',
       method: 'POST',
       data: {
         'sid': options.id
@@ -151,7 +154,7 @@ Page({
         tempheight = 860
       }
 
-      console.log(tempwidth + "--->" + tempheight)
+      console.log("处理后--->" + tempwidth + "--->" + tempheight)
 
       this.setData({
         cimg: baseUrl + scInfo.sc_before_img,
@@ -225,30 +228,40 @@ Page({
   },
 
   getUserInfo() {
-    var that = this
-    wechat.getCryptoData2()
-      .then(d => {
-        return wechat.getMyData(d);
-      })
-      .then(d => {
-        console.log("从后端获取的用户信息--->", d.data);
-        userInfo = d.data.data
-        wechat.saveUserInfo(userInfo)
-        app.globalData.userInfo = userInfo
-        that.data.is_login = true
-        if (jump_type == 1) {
-          that.create1();
-          // that.setData({
-          //   showModal: true
-          // })
-        }
-      })
-      .catch(e => {
-        console.log(e);
-      })
+    userInfo = app.globalData.userInfo || wx.getStorageSync('user_info')
+    //user_is_vip = userInfo.is_vip == 1 ? true : false
+    console.log(userInfo)
+
+    //如果用户已经登录过，直接生成
+    if(userInfo){
+      this.create1();
+    }else{
+      var that = this
+      wechat.getCryptoData2()
+        .then(d => {
+          return wechat.getMyData(d);
+        })
+        .then(d => {
+          console.log("从后端获取的用户信息--->", d.data);
+          userInfo = d.data.data
+          wechat.saveUserInfo(userInfo)
+          app.globalData.userInfo = userInfo
+          that.data.is_login = true
+          if (jump_type == 1) {
+            that.create1();
+            // that.setData({
+            //   showModal: true
+            // })
+          }
+        })
+        .catch(e => {
+          console.log(e);
+        })
+    }
   },
 
   create1: function (event) {
+    var that = this
     console.log(data_files)
     var img = ''
     let inputs = []
@@ -262,6 +275,15 @@ Page({
         img = crop_path
       }else{
         if (is_visable == 0) {
+
+          if (!sval) {
+            wx.showToast({
+              title: data_files[i].field_name,
+              icon: 'none'
+            })
+            return;
+          }
+
           inputs.push(sval)
         } else {
           if (hide_type == 0) {//姓名
@@ -284,7 +306,7 @@ Page({
     console.log('img path --->' + img)
     if (img) {
       wx.uploadFile({
-        url: 'http://192.168.1.3:8899/createzbimage2',
+        url: 'http://192.168.80.97:8899/createzbimage2',
         name: 'file',
         filePath: crop_path,
         formData: {
@@ -295,7 +317,7 @@ Page({
           var obj = JSON.parse(res.data)
           console.log(obj.data);
           wx.navigateTo({
-            url: '../result/result?rimg=' + obj.data.file_name + '&title=' + scInfo.sc_name
+            url: '../result/result?rimg=' + obj.data.file_name + '&title=' + scInfo.sc_name + '&swidth=' + that.data.swidth + '&sheight=' + that.data.sheight
           })
         },
         fail: function (res) {
@@ -304,7 +326,7 @@ Page({
       })
     } else {
       wx.request({
-        url: 'http://192.168.1.3:8899/createzbimage1',
+        url: 'http://192.168.80.97:8899/createzbimage1',
         method: 'POST',
         data: {
           'in_data': inputs,
@@ -312,9 +334,9 @@ Page({
         },
         success: function (res) {
 
-          console.log(res.data.data.file_name);
+          console.log(res.data.data.file_name + '--swidth--->' + that.data.swidth);
           wx.navigateTo({
-            url: '../result/result?rimg=' + res.data.data.file_name + '&title=' + data_files.title
+            url: '../result/result?rimg=' + res.data.data.file_name + '&title=' + scInfo.sc_name + '&swidth=' + that.data.swidth + '&sheight=' + that.data.sheight
           })
         },
         fail: function (res) {

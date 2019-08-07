@@ -1,8 +1,8 @@
 <view class='create-view'>
-    <image mode='widthFix' src='{{cimg}}' class='create-image' bindtap='preimage' bindload='loadDone'></image>
+    <image mode='widthFix' src='{{cimg}}' style='width:{{swidth}}rpx;height:{{sheight}}rpx' class='create-image' bindtap='preimage' bindload='loadDone'></image>
 </view>
 
-<view>
+<view class="input-fields">
   <block wx:for="{{params}}" wx:key="id" wx:for-item="item" wx:for-index="index">
       <block wx:if="{{item.is_visable == 0}}">
           <!--输入框-->
@@ -29,15 +29,25 @@
 
   </block>
 
-  <view class='create_button'>
-      <view class="page__bd page__bd_spacing">
+  <!-- <view class='create_button'>
+      <!-- <view class="page__bd page__bd_spacing">
         <button class="weui-btn" type="primary" bindgetuserinfo='userLogin' open-type='getUserInfo'>一键生成</button>
-      </view>
-  </view>
-  <view class='bottom-user'>
+      </view> 
+  </view> -->
+  <!-- <view class='bottom-user'>
     <label class='user-remark'>素材由用户：{{author_name}} 上传</label>
-  </view>
+  </view> -->
 </view>
+
+<view class="create-bottom">
+  <view class="add-collection">
+    <image src="../image/home_normal_icon.png" class="add-collection-img"></image>
+    <text class='add-collection-txt' bindtap='tohome'>回首页</text>
+  </view>
+  <!-- <text class='create-gif' hover-class='create-gif-hover' bindtap='watermark'>一键生成</text> -->
+  <button class="quick_btn" bindgetuserinfo='userLogin' open-type='getUserInfo'>一键生成</button>
+</view>
+
 
 <!--弹窗下载APP-->
 <view class="modal-mask" catchtouchmove="preventTouchMove" bindtap='hideModal' wx:if="{{showModal}}"></view>
