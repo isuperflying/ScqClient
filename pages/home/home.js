@@ -6,7 +6,7 @@ var list;
 var types;
 var banners;
 var page =1;
-var baseUrl = 'http://192.168.80.97:8899/'
+var baseUrl = 'http://192.168.1.3:8899/'
 Page({
   data: {
     array: [],
@@ -29,7 +29,7 @@ Page({
     list = null;
     var Page$this = this;
     wx.request({
-      url: 'http://192.168.80.97:8899/querysourceinfolist',
+      url: 'http://192.168.1.3:8899/querysourceinfolist',
       method: 'POST',
       data: {
         page:1

@@ -8,7 +8,7 @@ var pre_img;
 const app = getApp()
 var width;
 var height;
-var baseUrl = 'http://192.168.80.97:8899/'
+var baseUrl = 'http://192.168.1.3:8899/'
 let userInfo
 var jump_type = 1 //生成
 var user_is_vip = false
@@ -53,7 +53,7 @@ Page({
     console.log('id--->' + options.id)
     var that = this;
     wx.request({
-      url: 'http://192.168.80.97:8899/queryscinfobyid',
+      url: 'http://192.168.1.3:8899/queryscinfobyid',
       method: 'POST',
       data: {
         'sid': options.id
@@ -123,21 +123,24 @@ Page({
           console.log(width + "---" + height)
         }
 
-        // var itype = parseInt(obj['restrain'])
-        // switch (itype) {
-        //   case 0:
-        //     obj['itype'] = 'text'
-        //     break
-        //   case 1:
-        //     obj['itype'] = 'number'
-        //     break
-        //   case 2:
-        //     obj['itype'] = 'text'
-        //     break
-        //   case 3:
-        //     obj['itype'] = 'text'
-        //     break
-        // }
+        var itype = parseInt(obj['restrain'])
+        switch (itype) {
+          case 0:
+            obj['itype'] = 'text'
+            break
+          case 1:
+            obj['itype'] = 'number'
+            break
+          case 2:
+            obj['itype'] = 'text'
+            break
+          case 3:
+            obj['itype'] = 'text'
+            break
+          case 4:
+            obj['itype'] = 'digit'
+            break
+        }
         console.log(obj)
       })
 
@@ -234,10 +237,10 @@ Page({
         app.globalData.userInfo = userInfo
         that.data.is_login = true
         if (jump_type == 1) {
-          //that.create1();
-          that.setData({
-            showModal: true
-          })
+          that.create1();
+          // that.setData({
+          //   showModal: true
+          // })
         }
       })
       .catch(e => {
@@ -281,7 +284,7 @@ Page({
     console.log('img path --->' + img)
     if (img) {
       wx.uploadFile({
-        url: 'http://192.168.80.97:8899/createzbimage2',
+        url: 'http://192.168.1.3:8899/createzbimage2',
         name: 'file',
         filePath: crop_path,
         formData: {
@@ -301,7 +304,7 @@ Page({
       })
     } else {
       wx.request({
-        url: 'http://192.168.80.97:8899/createzbimage1',
+        url: 'http://192.168.1.3:8899/createzbimage1',
         method: 'POST',
         data: {
           'in_data': inputs,
@@ -484,11 +487,12 @@ Page({
                 app.globalData.userInfo = userInfo
               }
 
-              current_index++;
-              that.setCurrentWord()
               that.setData({
                 showModal: false
               });
+              
+              //继续生成
+              that.create1();
             },
             fail: function (res) {
               console.log('pay fail----')

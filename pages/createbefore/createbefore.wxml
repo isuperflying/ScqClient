@@ -7,7 +7,7 @@
       <block wx:if="{{item.is_visable == 0}}">
           <!--输入框-->
           <view wx:if="{{item.input_type == 0}}" class='create_content'>
-              <input placeholder="{{item.field_name}}" class='text_input' bindinput='bindKeyInput' data-i="{{index}}" maxlength='{{item.input_length}}'></input>
+              <input placeholder="{{item.field_name}}" type='{{item.itype}}' class='text_input' bindinput='bindKeyInput' data-i="{{index}}" maxlength='{{item.input_length}}'></input>
           </view>
           <!--下拉框-->
           <view wx:if="{{item.input_type == 1}}" class='create_content_select'>
