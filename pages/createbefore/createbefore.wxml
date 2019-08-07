@@ -42,7 +42,7 @@
 <view class="create-bottom">
   <view class="add-collection">
     <image src="../image/home_normal_icon.png" class="add-collection-img"></image>
-    <text class='add-collection-txt' bindtap='tohome'>回首页</text>
+    <text class='add-collection-txt' bindtap='tohome'>首页</text>
   </view>
   <!-- <text class='create-gif' hover-class='create-gif-hover' bindtap='watermark'>一键生成</text> -->
   <button class="quick_btn" bindgetuserinfo='userLogin' open-type='getUserInfo'>一键生成</button>

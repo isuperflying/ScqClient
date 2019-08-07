@@ -1,20 +1,20 @@
-// pages/myinfo/myinfo.js
+// pages/copyright/copyright.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    user_head: '../image/def_head.png',
+
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-      wx.setNavigationBarTitle({
-        title: '我的',
-      })
+    wx.setNavigationBarTitle({
+      title: '免责申明',
+    })
   },
 
   /**
@@ -24,17 +24,6 @@ Page({
 
   },
 
-  followUs:function(){
-    wx.navigateTo({
-      url: '/pages/about/about',
-    })
-  },
-
-  copyright:function(){
-    wx.navigateTo({
-      url: '/pages/copyright/copyright',
-    })
-  },
   /**
    * 生命周期函数--监听页面显示
    */

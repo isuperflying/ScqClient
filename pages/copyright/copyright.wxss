@@ -1,0 +1,21 @@
+/* pages/copyright/copyright.wxss */
+page{
+  width: 100%;
+  height: 100%;
+}
+
+.copyright-view {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.copyright-txt {
+  width: 90%;
+  font-size: 12pt;
+  color: #555;
+  line-height: 1.3em;
+  margin-bottom: 30rpx;
+}

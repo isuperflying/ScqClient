@@ -1,31 +1,51 @@
 /* pages/about/about.wxss */
-.donate{
-  margin-left: auto;
-  margin-right: auto;
+.view-content{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.info {
-  margin:8px;
-  margin-top: 25px;
-  display: block; 
-  font-size: 15px;
-  font-family:monospace;
+.mini-info {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 100rpx;
 }
 
-.donate-info { 
-  text-align: center;
-  margin-top: 25px;
-  margin-bottom: 10px;
-  font-size: 15px;
-  font-family:monospace;
-  font-weight: bold;
+.mimi-title {
+  font-size: 20pt;
+  color: #000;
+  margin-left: 20rpx;
 }
 
-.note {
-  margin:8px;
-  margin-top: 25px;
-  display: block; 
-  font-size: 13px;
-  font-weight: bold;
-  font-family:monospace;
+.mimi-content {
+  font-size: 12pt;
+  color: #999;
+  margin-top: 20rpx;
+  padding: 40rpx;
+  line-height: 1.5em;
+}
+
+.about-logo {
+  width: 60rpx;
+  height: 60rpx;
+}
+.follow-wx{
+  width: 300rpx;
+  height: 300rpx;
+  margin-top: 50rpx;
+}
+.follow-txt {
+  font-size: 14pt;
+  color: #000;
+  margin-top: 10rpx;
+}
+.qq-qun{
+  font-size: 14pt;
+  color: rgb(18, 165, 250);
+  margin-top: 100rpx;
 }

@@ -260,7 +260,7 @@ page{
 }
 
 .add-collection{
-  background-color: #dbdbdb;
+  background-color: #eee;
   height: 88rpx;
   width: 30%;
   display: flex;
@@ -277,8 +277,8 @@ page{
 }
 
 .add-collection-img{
-  width: 48rpx;
-  height: 48rpx;
+  width: 50rpx;
+  height: 50rpx;
 }
 
 .create-gif{

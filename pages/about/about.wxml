@@ -1,4 +1,11 @@
 <view class="view-content">
-  <text class="mimi-title">趣图生成器</text>
-  <text class="mimi-content">趣图生成器是一个</text>
+  <view class="mini-info">
+    <image src="../image/logo.png" class="about-logo"></image>
+    <text class="mimi-title">趣图生成器</text>
+  </view>
+  <text class="mimi-content">趣图生成器是一个在线生成各种装逼图片的工具，为你提供表白、炫富、恶搞证书、明星合照等趣味图片。</text>
+  <image src="../image/wx_code.jpg" class="follow-wx"></image>
+  <text class="follow-txt">关注公众号</text>
+
+  <text class="qq-qun">加入群聊：6666666</text>
 </view>
