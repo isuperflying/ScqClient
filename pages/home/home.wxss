@@ -1,4 +1,9 @@
 /**index.wxss**/
+page{
+  width: 100%;
+  height: 100%;
+  background-color: #f1f1f1;
+}
 .slide-image{
   margin: auto;
   display: block;
@@ -17,7 +22,6 @@
   width:100%;
   overflow:hidden;
   font-size:12px;
-  background-color: #fff;
   font-family: "\5FAE\8F6F\96C5\9ED1";
 }
 
@@ -53,21 +57,22 @@
 }
 .img-list .li{
     width: 49%;
-    height: 240rpx;
+    height: 300rpx;
     overflow: hidden;
     position: relative;
     float:left;
     margin-left: 1%;
     margin-top:9rpx;
+    background-color: #fff;
+    border-radius: 10rpx;
 }
+
 .img-list .li navigator{
     width: 100%;
     height: 100%;
 }
 .item-img{
     width: 100%;
-    min-height: 100%;
-    border-radius: 10rpx;
 }
 .img-list .li text{
     position: absolute;
@@ -76,10 +81,12 @@
     z-index: 2;
     width: 96%;
     padding:0 2%;
-    height: 35px;
-    line-height: 35px;
-    color:#fff;
+    height: 60rpx;
+    line-height: 60rpx;
+    color:#000;
+    text-align: center;
 }
+
 .is-vip{
   width: 69rpx;
   height: 50rpx;
@@ -89,6 +96,7 @@
   z-index: 2;
   padding:1% 2%;
 }
+
 .img-list .li .bg{
     position: absolute;
     bottom: 0;

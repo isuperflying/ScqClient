@@ -7,6 +7,7 @@ var types;
 var banners;
 var page =1;
 var baseUrl = 'http://192.168.1.3:8899/'
+var is_vip;
 Page({
   data: {
     array: [],
@@ -53,6 +54,7 @@ Page({
   },
 
   onLoad: function () {
+    console.log('onLoad--->');
     page = 1;
     list = null;
     var Page$this = this;
