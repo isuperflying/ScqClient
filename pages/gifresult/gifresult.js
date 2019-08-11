@@ -15,7 +15,7 @@ Page({
     }
     console.log("down--->" + downUrl)
     return {
-      title: '腾牛生成神器',
+      title: '趣图生成器',
       path: '/pages/gifresult/gifresult?rimg=' + pre_img ,
       imageUrl: downUrl,
       success: function (res) {

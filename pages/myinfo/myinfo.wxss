@@ -134,16 +134,15 @@ page {
   justify-content: center;
   position: fixed;
   top: 35rpx;
-  left: 335rpx;
+  left: 345rpx;
 }
 
 .user-head {
-  width: 180rpx;
-  height: 180rpx;
+  width: 100rpx;
+  height: 100rpx;
   border-radius: 50%;
   overflow: hidden;
   border: 4rpx solid #fff;
-  position: absolute;
 }
 
 .nick-name {

@@ -6,7 +6,7 @@ var list;
 var types;
 var banners;
 var page =1;
-var baseUrl = 'http://192.168.80.97:8899/'
+var baseUrl = 'http://192.168.1.3:8899/'
 var is_vip;
 let userInfo;
 
@@ -18,7 +18,7 @@ Page({
       { 'id': '2','ico': '../image/t2.png', 'name': '恶搞' },
       { 'id': '3','ico': '../image/t3.png', 'name': '炫富' },
       { 'id': '4','ico': '../image/t4.png', 'name': '证书' }],
-    indicatorDots: true,
+    indicatorDots: false,
     autoplay: true,
     interval: 3000,
     duration: 1000,
@@ -32,7 +32,7 @@ Page({
     list = null;
     var Page$this = this;
     wx.request({
-      url: 'http://192.168.80.97:8899/querysourceinfolist',
+      url: 'http://192.168.1.3:8899/querysourceinfolist',
       method: 'POST',
       data: {
         page:1
@@ -78,30 +78,30 @@ Page({
 
   onReachBottom:function(){
     
-    var Page$this = this;
-    page++;
-    wx.request({
-      url: 'https://nz.qqtn.com/zbsq/index.php?m=Home&c=zbsq&a=client&version=3.5',
-      method: 'GET',
-      data: {
-        'page': page
-      },
-      success: function (res) {
-        list = list.concat(res.data.data);
-        Page$this.setData({
-          array: list,
-          is_load_more: false
-        });
-      },
-      fail:function(res){
-        Page$this.setData({
-          is_load_more: false
-        })
-      }
-    })
-    this.setData({
-      is_load_more:true
-    })
+    // var Page$this = this;
+    // page++;
+    // wx.request({
+    //   url: 'https://nz.qqtn.com/zbsq/index.php?m=Home&c=zbsq&a=client&version=3.5',
+    //   method: 'GET',
+    //   data: {
+    //     'page': page
+    //   },
+    //   success: function (res) {
+    //     list = list.concat(res.data.data);
+    //     Page$this.setData({
+    //       array: list,
+    //       is_load_more: false
+    //     });
+    //   },
+    //   fail:function(res){
+    //     Page$this.setData({
+    //       is_load_more: false
+    //     })
+    //   }
+    // })
+    // this.setData({
+    //   is_load_more:true
+    // })
   },
   create:function(event){
     var sid = event.currentTarget.dataset.sid;

@@ -3,7 +3,7 @@ var downUrl;
 var pre_img;
 var show_tip = true;
 var res_title;
-var baseUrl = 'http://192.168.80.97:8899/'
+var baseUrl = 'http://192.168.1.3:8899/'
 Page({
   data:{
     result_img:'/pages/image/no_data.png',
@@ -17,7 +17,7 @@ Page({
     }
     console.log("down--->" + downUrl)
     return {
-      title: '腾牛生成神器',
+      title: '趣图生成器',
       path: '/pages/result/result?title=' + res_title + '&rimg=' + pre_img ,
       imageUrl: downUrl,
       success: function (res) {

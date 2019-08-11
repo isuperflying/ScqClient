@@ -4,7 +4,6 @@
             <view class='user-head-wrapper'>
               <view class='user-head'>
                 <open-data type="userAvatarUrl"></open-data>
-                <image src="../image/user_is_vip.png" class="is-vip-img"></image>
               </view>
               <open-data type="userNickName" class='nick-name'></open-data>
             </view>
