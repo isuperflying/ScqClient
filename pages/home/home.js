@@ -6,8 +6,10 @@ var list;
 var types;
 var banners;
 var page =1;
-var baseUrl = 'http://192.168.1.3:8899/'
+var baseUrl = 'http://192.168.80.97:8899/'
 var is_vip;
+let userInfo;
+
 Page({
   data: {
     array: [],
@@ -30,7 +32,7 @@ Page({
     list = null;
     var Page$this = this;
     wx.request({
-      url: 'http://192.168.1.3:8899/querysourceinfolist',
+      url: 'http://192.168.80.97:8899/querysourceinfolist',
       method: 'POST',
       data: {
         page:1
@@ -62,6 +64,11 @@ Page({
     wx.setNavigationBarTitle({
       title: '趣图生成器'
     })
+  },
+  
+  onShow:function(){
+    console.log('on show--->')
+    userInfo = app.globalData.userInfo || wx.getStorageSync('user_info')
   },
 
   onPullDownRefresh:function(){
@@ -181,7 +188,14 @@ Page({
    */
   onConfirm: function () {
     this.hideModal();
-  }
+  },
+  onShareAppMessage: function () {
+    return {
+      title: '不装逼的人生是没有意义的!',
+      path: '/pages/home/home',
+      imageUrl: '../image/share_img.jpg'
+    }
+  },
 })
 
 

@@ -1,14 +1,12 @@
 <view class='my-info-content'>
           <view class='user-head-view'>
-            <image class='user-head' src='{{user_head}}'></image>
             
-            <view wx:if='{{is_login}}'>
-              <text class='user-name'>{{nick_name}}</text>
-            </view>
-            <view wx:if='{{!is_login}}'>
-              <button wx:if='{{canIUse}}' 
-              class='login-btn' open-type="getUserInfo" bindgetuserinfo='onGotUserInfo'></button>
-              <text class='no-login-txt'>请登录</text>
+            <view class='user-head-wrapper'>
+              <view class='user-head'>
+                <open-data type="userAvatarUrl"></open-data>
+                <image src="../image/user_is_vip.png" class="is-vip-img"></image>
+              </view>
+              <open-data type="userNickName" class='nick-name'></open-data>
             </view>
 
           </view>
