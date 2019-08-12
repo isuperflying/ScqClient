@@ -8,7 +8,7 @@ var pre_img;
 const app = getApp()
 var width;
 var height;
-var baseUrl = 'http://192.168.1.3:8899/'
+var baseUrl = 'https://www.antleague.com/scqapi/'
 let userInfo
 var jump_type = 1 //生成
 var user_is_vip = false
@@ -56,7 +56,7 @@ Page({
     console.log('id--->' + options.id)
     var that = this;
     wx.request({
-      url: 'http://192.168.1.3:8899/queryscinfobyid',
+      url: 'https://www.antleague.com/scqapi/queryscinfobyid',
       method: 'POST',
       data: {
         'sid': options.id
@@ -246,10 +246,10 @@ Page({
           app.globalData.userInfo = userInfo
           that.data.is_login = true
           if (jump_type == 1) {
-            that.create1();
-            // that.setData({
-            //   showModal: true
-            // })
+            //that.create1();
+            that.setData({
+              showModal: true
+            })
           }
         })
         .catch(e => {
@@ -304,7 +304,7 @@ Page({
     console.log('img path --->' + img)
     if (img) {
       wx.uploadFile({
-        url: 'http://192.168.1.3:8899/createzbimage2',
+        url: 'https://www.antleague.com/scqapi/createzbimage2',
         name: 'file',
         filePath: crop_path,
         formData: {
@@ -314,8 +314,25 @@ Page({
         success: function (res) {
           var obj = JSON.parse(res.data)
           console.log(obj.data);
+
+          if (obj.code == -1) {
+            wx.showToast({
+              title: '生成失败，请稍后重试',
+              icon: 'none'
+            })
+            return;
+          }
+
+          if (obj.code == -2) {
+            wx.showToast({
+              title: obj.msg,
+              icon: 'none'
+            })
+            return;
+          }
+
           wx.navigateTo({
-            url: '../result/result?rimg=' + obj.data.file_name + '&title=' + scInfo.sc_name + '&swidth=' + that.data.swidth + '&sheight=' + that.data.sheight
+            url: '../result/result?rimg=' + obj.file_name + '&title=' + scInfo.sc_name + '&swidth=' + that.data.swidth + '&sheight=' + that.data.sheight
           })
         },
         fail: function (res) {
@@ -324,15 +341,31 @@ Page({
       })
     } else {
       wx.request({
-        url: 'http://192.168.1.3:8899/createzbimage1',
+        url: 'https://www.antleague.com/scqapi/createzbimage1',
         method: 'POST',
         data: {
           'in_data': inputs,
           'sid': item_id
         },
         success: function (res) {
+          console.log(res.data)
+         
+          if (res.data.code == -1){
+            wx.showToast({
+              title: '生成失败，请稍后重试',
+              icon:'none'
+            })
+            return;
+          }
 
-          console.log(res.data.data.file_name + '--swidth--->' + that.data.swidth);
+          if (res.data.code == -2) {
+            wx.showToast({
+              title: res.data.msg,
+              icon: 'none'
+            })
+            return;
+          }
+
           wx.navigateTo({
             url: '../result/result?rimg=' + res.data.data.file_name + '&title=' + scInfo.sc_name + '&swidth=' + that.data.swidth + '&sheight=' + that.data.sheight
           })

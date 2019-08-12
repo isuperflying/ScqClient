@@ -1,6 +1,6 @@
 <!--home.wxml-->
 <swiper indicator-dots="{{indicatorDots}}"
-    autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" class="swiper-view">
+    autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
     <block wx:for="{{banner}}"  wx:key="id" wx:for-item="item">
       <swiper-item>
           <image src="{{baseUrl + item.cover}}" class="slide-image" mode='widthFix' bindtap='banner' data-item='{{item}}'/>

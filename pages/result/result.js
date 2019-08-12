@@ -3,7 +3,7 @@ var downUrl;
 var pre_img;
 var show_tip = true;
 var res_title;
-var baseUrl = 'http://192.168.1.3:8899/'
+var baseUrl = 'https://www.antleague.com/scqapi/'
 Page({
   data:{
     result_img:'/pages/image/no_data.png',

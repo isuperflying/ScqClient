@@ -6,7 +6,7 @@ var list;
 var types;
 var banners;
 var page =1;
-var baseUrl = 'http://192.168.1.3:8899/'
+var baseUrl = 'https://www.antleague.com/scqapi/'
 var is_vip;
 let userInfo;
 
@@ -32,7 +32,7 @@ Page({
     list = null;
     var Page$this = this;
     wx.request({
-      url: 'http://192.168.1.3:8899/querysourceinfolist',
+      url: 'https://www.antleague.com/scqapi/querysourceinfolist',
       method: 'POST',
       data: {
         page:1
@@ -131,7 +131,7 @@ Page({
     }
 
     wx.navigateTo({
-      url: '../category/category?banner_id=' + obj.id + '&type_name=' + obj.title +'&type=2'
+      url: '../category/category?banner_id=1' + '&type_name=趣味表白&type=2'
     })
   },
 
@@ -158,7 +158,7 @@ Page({
     }else{
       obj = type_item;
     }
-
+    console.log(obj.id + '---' + obj.name)
     wx.navigateTo({
       url: '../category/category?type_id=' + obj.id + '&type_name=' + obj.name + '&type=1'
     })

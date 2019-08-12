@@ -1,4 +1,4 @@
-var baseUrl = 'http://192.168.1.3:8899/'
+var baseUrl = 'https://www.antleague.com/scqapi/'
 /**
  * Promise化小程序接口
  */

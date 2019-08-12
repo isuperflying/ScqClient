@@ -5,7 +5,7 @@ var type_id;
 var banner_id;
 var use_id;
 var mtype;
-var baseUrl = 'http://192.168.1.3:8899/'
+var baseUrl = 'https://www.antleague.com/scqapi/'
 Page({
   data: {
     isShow: true,
@@ -98,10 +98,10 @@ Page({
     //console.log("user_id ---" + type_id)
 
     console.log("page--->" + page)
-    var rurl = 'http://192.168.1.3:8899/querysourceinfolist'
+    var rurl = 'https://www.antleague.com/scqapi/querysourceinfolist'
     //最新
     wx.request({
-      url: 'http://192.168.1.3:8899/querysourceinfolist',
+      url: 'https://www.antleague.com/scqapi/querysourceinfolist',
       method: 'POST',
       data: {
         'page': page,
