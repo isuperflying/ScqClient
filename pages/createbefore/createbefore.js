@@ -246,10 +246,10 @@ Page({
           app.globalData.userInfo = userInfo
           that.data.is_login = true
           if (jump_type == 1) {
-            //that.create1();
-            that.setData({
-              showModal: true
-            })
+            that.create1();
+            // that.setData({
+            //   showModal: true
+            // })
           }
         })
         .catch(e => {

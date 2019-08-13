@@ -69,6 +69,10 @@ Page({
   onShow:function(){
     console.log('on show--->')
     userInfo = app.globalData.userInfo || wx.getStorageSync('user_info')
+    is_vip = userInfo.is_vip;
+    this.setData({
+      is_vip: is_vip,
+    });
   },
 
   onPullDownRefresh:function(){

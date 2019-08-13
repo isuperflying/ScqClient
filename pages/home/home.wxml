@@ -23,7 +23,7 @@
             <view class="li" wx:for="{{array}}" wx:key="id" wx:for-item="item" bindtap='create' data-sid='{{item.id}}'>
                 <view>
                     <image src="{{baseUrl + item.sc_thumb}}" mode="widthFix" class='item-img'></image>
-                    <image src='../image/is_vip.png' class='is-vip' wx:if="{{item.sc_is_vip == 1}}"></image>
+                    <image src='../image/is_vip.png' class='is-vip' wx:if="{{is_vip == 0 && item.sc_is_vip == 1}}"></image>
                     <text>{{item.sc_name}}</text>
                     <!-- <view class="bg"></view> -->
                 </view>

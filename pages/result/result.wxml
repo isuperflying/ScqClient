@@ -4,7 +4,7 @@
 </view>
 <view class="result-opera-view">
   <button class='share_button' bindtap='shareImage' hover-class='share-hover' open-type='share'>邀请朋友玩</button>
-  <button class='save_button' bindtap='saveImage' hover-class='save-hover'>保存到相册</button>
+  <button class='save_button' bindtap='preimage' hover-class='save-hover'>保存到相册</button>
 </view>
 
 <view class="show_tip" data-statu="close" wx:if="{{showModalStatus}}" bindtap='powerShow'>
