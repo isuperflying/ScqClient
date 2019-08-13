@@ -6,8 +6,8 @@ var list;
 var types;
 var banners;
 var page =1;
-var baseUrl = 'https://www.antleague.com/scqapi/'
-var is_vip;
+var baseUrl = 'https://xxx/scqapi/'
+var is_vip = 0;
 let userInfo;
 
 Page({
@@ -24,7 +24,8 @@ Page({
     duration: 1000,
     is_load_more:false,
     showModal:false,
-    baseUrl:baseUrl
+    baseUrl:baseUrl,
+    is_vip: is_vip
   },
 
   getHomeData: function (that){
@@ -32,7 +33,7 @@ Page({
     list = null;
     var Page$this = this;
     wx.request({
-      url: 'https://www.antleague.com/scqapi/querysourceinfolist',
+      url: 'https://xxx/scqapi/querysourceinfolist',
       method: 'POST',
       data: {
         page:1
@@ -69,10 +70,12 @@ Page({
   onShow:function(){
     console.log('on show--->')
     userInfo = app.globalData.userInfo || wx.getStorageSync('user_info')
-    is_vip = userInfo.is_vip;
-    this.setData({
-      is_vip: is_vip,
-    });
+    if (userInfo){
+      is_vip = userInfo.is_vip;
+      this.setData({
+        is_vip: is_vip,
+      });
+    }
   },
 
   onPullDownRefresh:function(){
@@ -85,7 +88,7 @@ Page({
     // var Page$this = this;
     // page++;
     // wx.request({
-    //   url: 'https://nz.qqtn.com/zbsq/index.php?m=Home&c=zbsq&a=client&version=3.5',
+    //   url: '',
     //   method: 'GET',
     //   data: {
     //     'page': page

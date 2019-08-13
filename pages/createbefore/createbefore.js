@@ -8,10 +8,13 @@ var pre_img;
 const app = getApp()
 var width;
 var height;
-var baseUrl = 'https://www.antleague.com/scqapi/'
+var baseUrl = 'https://xxx/scqapi/'
 let userInfo
 var jump_type = 1 //生成
 var user_is_vip = false
+
+var current_system
+
 Page({
   data: {
     cimg: '',
@@ -32,6 +35,14 @@ Page({
     wx.showLoading({
       title: '加载中',
     })
+
+    //当前的系统版本
+    wx.getSystemInfo({
+      success(res) {
+        current_system = res.platform
+        console.log(current_system)
+      }
+    });
 
     userInfo = app.globalData.userInfo || wx.getStorageSync('user_info')
     //user_is_vip = userInfo.is_vip == 1 ? true : false
@@ -56,7 +67,7 @@ Page({
     console.log('id--->' + options.id)
     var that = this;
     wx.request({
-      url: 'https://www.antleague.com/scqapi/queryscinfobyid',
+      url: 'https://xxx/scqapi/queryscinfobyid',
       method: 'POST',
       data: {
         'sid': options.id
@@ -227,12 +238,27 @@ Page({
 
   getUserInfo() {
     userInfo = app.globalData.userInfo || wx.getStorageSync('user_info')
-    user_is_vip = userInfo.is_vip == 1 ? true : false
     console.log(userInfo)
 
+    if(userInfo){
+      user_is_vip = userInfo.is_vip == 1 ? true : false
+    }
+    
     //如果用户已经登录过，直接生成
     if(userInfo){
-      this.create1();
+      
+      if (scInfo.is_vip == 0 || current_system == 'ios'){
+        this.create1();
+      }else{
+        if (!user_is_vip) {
+          this.setData({
+            showModal: true
+          })
+        } else {
+          this.create1();
+        }
+      }
+
     }else{
       var that = this
       wechat.getCryptoData2()
@@ -245,11 +271,22 @@ Page({
           wechat.saveUserInfo(userInfo)
           app.globalData.userInfo = userInfo
           that.data.is_login = true
+          if (userInfo) {
+            user_is_vip = userInfo.is_vip == 1 ? true : false
+          }
           if (jump_type == 1) {
-            that.create1();
-            // that.setData({
-            //   showModal: true
-            // })
+            
+            if (scInfo.is_vip == 0 || current_system == 'ios') {
+              that.create1();
+            } else {
+              if (!user_is_vip) {
+                that.setData({
+                  showModal: true
+                })
+              } else {
+                that.create1();
+              }
+            }
           }
         })
         .catch(e => {
@@ -302,9 +339,12 @@ Page({
     }
     console.log(inputs)
     console.log('img path --->' + img)
+    wx.showLoading({
+      title: '正在生成',
+    })
     if (img) {
       wx.uploadFile({
-        url: 'https://www.antleague.com/scqapi/createzbimage2',
+        url: 'https://xxx/scqapi/createzbimage2',
         name: 'file',
         filePath: crop_path,
         formData: {
@@ -312,7 +352,12 @@ Page({
           'sid': item_id
         },
         success: function (res) {
+          wx.hideLoading()
           var obj = JSON.parse(res.data)
+          // if(res instanceof 'string'){
+          //   obj = JSON.parse(res)
+          // }
+
           console.log(obj.data);
 
           if (obj.code == -1) {
@@ -325,29 +370,31 @@ Page({
 
           if (obj.code == -2) {
             wx.showToast({
-              title: obj.msg,
+              title: obj.data.msg,
               icon: 'none'
             })
             return;
           }
-
+          console.log('create before obj.file_name --->' + obj.data.file_name)
           wx.navigateTo({
-            url: '../result/result?rimg=' + obj.file_name + '&title=' + scInfo.sc_name + '&swidth=' + that.data.swidth + '&sheight=' + that.data.sheight
+            url: '../result/result?rimg=' + obj.data.file_name + '&title=' + scInfo.sc_name + '&swidth=' + that.data.swidth + '&sheight=' + that.data.sheight
           })
         },
         fail: function (res) {
+          wx.hideLoading();
           console.log("create fail--->" + JSON.stringify(res));
         }
       })
     } else {
       wx.request({
-        url: 'https://www.antleague.com/scqapi/createzbimage1',
+        url: 'https://xxx/scqapi/createzbimage1',
         method: 'POST',
         data: {
           'in_data': inputs,
           'sid': item_id
         },
         success: function (res) {
+          wx.hideLoading();
           console.log(res.data)
          
           if (res.data.code == -1){
@@ -371,136 +418,13 @@ Page({
           })
         },
         fail: function (res) {
+          wx.hideLoading();
           console.log("fail2--->" + JSON.stringify(res));
         }
       })
     }
   },
-
-  //一键生成
-  create: function (event) {
-    var field = data_files['field'];
-    var requestData = "{";
-    var img = "";
-    for (var i = 0; i < field.length; i++) {
-      var type = field[i]['input_type'];
-      var is_hide = field[i]['is_hide'];
-      if (is_hide == "1") {
-        var value = field[i]["sval"] || "";
-        requestData += "\"" + i + "\":\"" + value + "\"";
-      }
-      else if (type == 0) {
-        var maxlength = field[i]["text_len_limit"];
-
-        var value = field[i]["sval"];
-        if (!value) {
-          wx.showToast({
-            title: field[i]["def_val"],
-            icon: 'none'
-          })
-          return;
-        }
-        console.log("字段输入--" + value.length);
-
-        requestData += "\"" + i + "\":\"" + value + "\"";
-      } else if (type == 1) {
-        console.log("picker result--->" + i + "---" + field[i]["sval"])
-        requestData += "\"" + i + "\":\"" + field[i]["sval"] + "\"";
-      } else if (type > 1) {
-        img = crop_path;
-      }
-
-      if (i < field.length - 1) {
-        requestData += ",";
-      }
-    }
-
-    console.log("处理前--->" + requestData + "<---start");
-
-    if (img != '' && img != null) {
-      if (requestData.lastIndexOf(",") > -1 && requestData.lastIndexOf(",") == requestData.length - 1) {
-        requestData = requestData.substring(0, requestData.lastIndexOf(","));
-        console.log("处理后type1--->" + requestData + "<---end");
-      }
-
-      if (requestData.indexOf("{,") > -1) {
-        requestData = "{\"0\":\"\"," + requestData.substring(requestData.indexOf("{,") + 2);
-        console.log("处理后type2--->" + requestData + "<---end");
-      }
-    }
-
-    requestData += "}";
-
-    if (requestData.indexOf(',,') > -1) {
-      requestData = requestData.replace(',,', ',');
-    }
-
-    console.log("去除多余的值--->" + requestData);
-
-    console.log(img ? "img" : "noimg")
-
-    wx.showToast({
-      title: '生成中···',
-      icon: 'loading'
-    })
-
-    //console.log(requestData)
-
-    if (img) {
-      wx.uploadFile({
-        url: 'https://nz.qqtn.com/zbsq/index.php?m=Home&c=Zbsq&a=start_zb',
-        name: img ? "img" : "noimg",
-        filePath: crop_path,
-        formData: {
-          'requestData': requestData,
-          'id': item_id,
-          'mime': '863062030230011'
-        },
-        success: function (res) {
-
-          //console.log(res.data);
-          var obj;
-          if (typeof res.data === "string") {
-            obj = JSON.parse(res.data)
-          } else {
-            obj = res.data;
-          }
-          wx.navigateTo({
-            url: '../result/result?rimg=' + obj.data + '&title=' + data_files.title
-          })
-        },
-        fail: function (res) {
-          console.log("create fail--->" + JSON.stringify(res));
-        }
-      })
-    } else {
-      wx.request({
-        url: 'https://nz.qqtn.com/zbsq/index.php?m=Home&c=Zbsq&a=start_zb',
-        method: 'POST',
-        data: {
-          'requestData': requestData,
-          'id': item_id,
-          'mime': '863062030230011'
-        },
-        header: {
-          'content-type': 'application/x-www-form-urlencoded' // 默认值
-        },
-        success: function (res) {
-
-          console.log(res.data);
-          wx.navigateTo({
-            url: '../result/result?rimg=' + res.data.data + '&title=' + data_files.title
-          })
-        },
-        fail: function (res) {
-          console.log("fail2--->" + JSON.stringify(res));
-        }
-      })
-    }
-
-  },
-
-
+  
   vipBuy: function () {
     var that = this
     wx.request({
@@ -568,7 +492,22 @@ Page({
       }
     })
   },
-  
+
+  /**
+  * 弹出框蒙层截断touchmove事件
+  */
+  preventTouchMove: function () { },
+  /**
+   * 隐藏模态对话框
+   */
+
+  hideModal: function () {
+    console.log("hide");
+    this.setData({
+      showModal: false
+    });
+  },
+
   onShareAppMessage: function (res) {
     return {
       title: scInfo.sc_name,

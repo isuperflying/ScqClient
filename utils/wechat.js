@@ -1,4 +1,4 @@
-var baseUrl = 'https://www.antleague.com/scqapi/'
+var baseUrl = 'https://xxx/scqapi/'
 /**
  * Promise化小程序接口
  */

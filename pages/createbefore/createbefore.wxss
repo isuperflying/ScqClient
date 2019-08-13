@@ -189,12 +189,30 @@ page{
 .modal-title {
   font-size: 50rpx;
   color: #fff;
-  height: 180rpx;
-  line-height: 180rpx;
+  height: 150rpx;
+  line-height: 150rpx;
   border-top-left-radius: 20rpx;
   border-top-right-radius: 20rpx;
   background: #fc696e;
   margin-left: 46rpx;
+}
+
+.old-price-view{
+  height: 60rpx;
+  margin-bottom: 16rpx;
+}
+
+.old-price-txt{
+  color: #fff;
+  margin-left: 36rpx;
+  font-size: 40rpx;
+}
+
+.old-price-num{
+  color: #8B4513;
+  margin-left: 10rpx;
+  font-size: 40rpx;
+  text-decoration: line-through;
 }
 
 .line-view {
@@ -231,11 +249,19 @@ page{
 }
 
 .vip-price {
-  width: 190rpx;
-  height: 105rpx;
+  width: 200rpx;
+  height: 150rpx;
   position: absolute;
   top: 32rpx;
   right: 66rpx;
+}
+
+.top-close {
+  width: 72rpx;
+  height: 72rpx;
+  position: absolute;
+  top: -22rpx;
+  right: -22rpx;
 }
 
 .input-fields{

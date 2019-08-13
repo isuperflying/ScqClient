@@ -5,7 +5,7 @@ var type_id;
 var banner_id;
 var use_id;
 var mtype;
-var baseUrl = 'https://www.antleague.com/scqapi/'
+var baseUrl = 'https://xxx/scqapi/'
 Page({
   data: {
     isShow: true,
@@ -98,10 +98,10 @@ Page({
     //console.log("user_id ---" + type_id)
 
     console.log("page--->" + page)
-    var rurl = 'https://www.antleague.com/scqapi/querysourceinfolist'
+    var rurl = 'https://xxx/scqapi/querysourceinfolist'
     //最新
     wx.request({
-      url: 'https://www.antleague.com/scqapi/querysourceinfolist',
+      url: 'https://xxx/scqapi/querysourceinfolist',
       method: 'POST',
       data: {
         'page': page,

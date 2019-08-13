@@ -3,7 +3,7 @@ var downUrl;
 var pre_img;
 var show_tip = true;
 var res_title;
-var baseUrl = 'https://www.antleague.com/scqapi/'
+var baseUrl = 'https://xxx/scqapi/'
 Page({
   data:{
     result_img:'/pages/image/no_data.png',
@@ -35,7 +35,7 @@ Page({
     wx.showLoading({
       title: '加载中',
     })
-
+    console.log('result options --->' + options.rimg)
     var Page$this = this;
     if (options.rimg != null && options.rimg.indexOf('https') == -1) {
       options.rimg = options.rimg.replace('http', 'https');
