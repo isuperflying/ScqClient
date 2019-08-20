@@ -5,7 +5,7 @@ var type_id;
 var banner_id;
 var use_id;
 var mtype;
-var baseUrl = 'https://xxx/scqapi/'
+var baseUrl = 'http://192.168.1.3:8899/'
 Page({
   data: {
     isShow: true,
@@ -98,10 +98,10 @@ Page({
     //console.log("user_id ---" + type_id)
 
     console.log("page--->" + page)
-    var rurl = 'https://xxx/scqapi/querysourceinfolist'
+    var rurl = 'http://192.168.1.3:8899/querysourceinfolist'
     //最新
     wx.request({
-      url: 'https://xxx/scqapi/querysourceinfolist',
+      url: 'http://192.168.1.3:8899/querysourceinfolist',
       method: 'POST',
       data: {
         'page': page,

@@ -6,7 +6,7 @@ var list;
 var types;
 var banners;
 var page =1;
-var baseUrl = 'https://xxx/scqapi/'
+var baseUrl = 'http://192.168.1.3:8899/'
 var is_vip = 0;
 let userInfo;
 
@@ -33,7 +33,7 @@ Page({
     list = null;
     var Page$this = this;
     wx.request({
-      url: 'https://xxx/scqapi/querysourceinfolist',
+      url: 'http://192.168.1.3:8899/querysourceinfolist/',
       method: 'POST',
       data: {
         page:1
